@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>块分离的移动</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.kuang{
+				width: 100px;
+				height: 100px;
+				position: absolute;
+				z-index: 5;;
+			}
+			.yanse{
+				position: absolute;
+				width: 100px;
+				height: 100px;
+				background-color: red;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="kuang"></div>
+		<div class="yanse"></div>
+		<script type="text/javascript">
+			//获取元素
+			var kuang=document.querySelector(".kuang");
+			var newDiv=document.querySelector(".yanse");
+			//鼠标按下事件
+			kuang.onmousedown=function(ev){
+				//事件对象
+				var e=ev || window.event;
+				//鼠标点击位置
+				var mouseX=e.clientX;
+				var mouseY=e.clientY;
+				//获取div的位置
+				var divX=this.offsetLeft;
+				var divY=this.offsetTop;
+				kuang.style.borderWidth="1px";
+				kuang.style.borderColor="black";
+				kuang.style.borderStyle="dashed";
+//				console.log(divX,divY);
+				document.onmousemove=function(ev){
+					//事件对象
+					var e=ev || window.event;
+					//获取鼠标实时点击位置
+					var nowX=e.clientX;
+					var nowY=e.clientY;
+					//移动差值
+					var chaX=nowX-mouseX;
+					var chaY=nowY-mouseY;
+					//最终位置
+					var endposX = chaX + divX;
+					var endposY = chaY + divY;
+					//边界情况判断
+					//x
+					if(endposX < 0) {
+						endposX = 0;
+					} else if(endposX > window.innerWidth - kuang.clientWidth) {
+						endposX = window.innerWidth - kuang.clientWidth;
+					}
+					//y
+					if(endposY < 0) {
+						endposY = 0;
+					} else if(endposY > window.innerHeight - kuang.clientHeight) {
+						endposY = window.innerHeight - kuang.clientHeight;
+					}
+					//赋值
+					kuang.style.left=endposX-2+"px";
+					kuang.style.top=endposY-2+"px";
+				}
+			}
+			
+			//鼠标抬起事件
+			document.onmouseup=function(){
+				//去掉边框
+				kuang.style.borderWidth="";
+				kuang.style.borderColor="";
+				kuang.style.borderStyle="";
+				//div位置的变化
+				newDiv.style.left=kuang.offsetLeft+1+"px";
+				newDiv.style.top=kuang.offsetTop+1+"px";
+				//移动事件停止
+				document.onmousemove=false;
+			}
+		</script>
+	</body>
+</html>

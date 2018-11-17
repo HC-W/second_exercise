@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>刚之电子琴</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			.wrap{
+				width: 420px;
+				margin: 300px auto;
+			}
+			ul{
+				/*overflow: hidden;*/
+			}
+			li{
+				width: 48px;
+				height: 48px;
+				border: 1px solid #666;
+				float: left;
+				margin: 0 10px;
+				text-align: center;
+				line-height: 48px;
+				color: #fff;
+				font-weight: bold;
+				position: relative;
+				background-color: #000;
+			}
+			li span{
+				display: block;
+				opacity: 0.5;
+			}
+			li p{
+				height: 2px;
+				position: absolute;
+				bottom: 50px;
+				left: 0;
+				width: 100%;
+			}
+			li .span1{
+				background-color: pink;
+			}
+			li .span2{
+				background-color: skyblue;
+			}
+			li .span3{
+				background-color: purple;
+			}
+			li .span4{
+				background-color: blue;
+			}
+			li .span5{
+				background-color: aquamarine;
+			}
+			li .span6{
+				background-color: antiquewhite;
+			}
+		</style>
+	</head>
+	<body>
+		<audio src="../../mp3/010.mp3"></audio>
+		<audio src="../../mp3/015.mp3"></audio>
+		<audio src="../../mp3/020.mp3"></audio>
+		<audio src="../../mp3/025.mp3"></audio>
+		<audio src="../../mp3/030.mp3"></audio>
+		<audio src="../../mp3/040.mp3"></audio>
+		
+		<div class="wrap">
+			<ul>
+				<li>
+					<span class="span1">A</span>
+					<p class="p1"></p>
+				</li>
+				<li>
+					<span class="span2">S</span>
+					<p class="p2"></p>
+				</li>
+				<li>
+					<span class="span3">D</span>
+					<p class="p3"></p>
+				</li>
+				<li>
+					<span class="span4">J</span>
+					<p class="p4"></p>
+				</li>
+				<li>
+					<span class="span5">K</span>
+					<p class="p5"></p>
+				</li>
+				<li>
+					<span class="span6">L</span>
+					<p class="p6"></p>
+				</li>
+			</ul>
+		</div>
+		<script type="text/javascript">
+			var myP = document.querySelectorAll("p");
+			var mySp = document.querySelectorAll("span");
+			var myMp3 = document.querySelectorAll("audio");
+			//键码值数组
+			var keycodeArr = [65,83,68,74,75,76];
+			//height改变速度
+			var moveSpeed = 10;
+			//opacity改变速度
+			var changeSpeed = 0.05;
+			//是否可以播放
+			var isPlayOrNot = true;
+			
+			for(var i = 0; i < mySp.length; i++){
+				myP[i].style.backgroundColor = getComputedStyle(mySp[i])["backgroundColor"];
+			}
+			//键盘按下
+			document.onkeydown = function(ev){
+				var e = ev || window.event;
+				//遍历键码值比对
+				for(var i = 0; i < keycodeArr.length; i++){
+					if(e.keyCode == keycodeArr[i]){
+						//改变高度
+						/*startMove(myP[i],{
+							"height":200
+						},moveSpeed);
+						*/
+						//播放音乐
+						//播放时间为从头
+						if(isPlayOrNot){
+							myMp3[i].currentTime = 0;
+							myMp3[i].play();
+							//只播放一次
+							isPlayOrNot = false;
+						}
+						
+						startMove(myP[i],{
+							"bottom":100
+						},moveSpeed);
+						//改透明度
+						startMove(mySp[i],{
+							"opacity":1
+						},changeSpeed);
+					}
+				}
+			}
+			document.onkeyup = function(ev){
+				var e = ev || window.event;
+				for(var i = 0; i < keycodeArr.length; i++){
+					if(e.keyCode == keycodeArr[i]){
+						//改变高度
+//						startMove(myP[i],{
+//							"height":0
+//						},-moveSpeed);
+						//音乐停止
+						myMp3[i].pause();
+						//抬起后，再按下还可以播放
+						isPlayOrNot = true;
+						
+						startMove(myP[i],{
+							"bottom":50
+						},-moveSpeed);
+						//改透明度
+						startMove(mySp[i],{
+							"opacity":0.5
+						},-changeSpeed);
+					}
+				}
+			}
+			//运动
+			function startMove(who,sjson,speed,fn){
+				clearInterval(who.timer);
+				who.timer = setInterval(function(){
+					//遍历集合
+					//attrbute是键值对的键
+					//sjson[attrbute]是键值对的值
+					for(var attrbute in sjson){
+						var sTarget = sjson[attrbute];
+						//实时获取样式的值
+						var num = getCss(who,attrbute);
+						console.log(attrbute,sTarget,num);
+						//是否到达终点
+						if(num == sTarget){
+							//清除定时器
+							clearInterval(who.timer);
+							//回调函数
+							if(fn){
+								fn();
+							}
+						}else{
+							//判断opacity
+							if(attrbute == "opacity"){
+								//透明度变化
+								who.style[attrbute] = num + speed;
+							}else{
+								//带px单位的变化
+								who.style[attrbute] = num + speed + "px";
+							}
+						}
+					}
+				},20);
+			}
+			//获取非行间样式
+			function getCss(who,css){
+				return parseFloat(getComputedStyle(who)[css]);
+			}
+		</script>
+	</body>
+</html>
+

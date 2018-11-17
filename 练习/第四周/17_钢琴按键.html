@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>按钮键盘</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.wrap{
+				width: 400px;
+				margin: 0 auto;
+			}
+			.all{
+				width: 100%;
+				margin-top: 400px;
+				display: flex;
+				justify-content: space-between;
+			}
+			.all>div{
+				width: 50px;
+				height: 50px;
+				position: relative;
+			}
+			.all>div .p1{
+				width: 100%;
+				height: 100%;
+				font-size: 25px;
+				color: white;
+				font-weight: bold;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				border: 1px solid black;
+				box-sizing: border-box;
+				opacity: 0.5;
+			}
+			.all>div>div{
+				width: 100%;
+				/*background-color: orangered;*/
+				position: absolute;
+				left: 0;
+				bottom: 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<audio src="../../mp3/010.mp3"></audio>
+		<audio src="../../mp3/015.mp3"></audio>
+		<audio src="../../mp3/020.mp3"></audio>
+		<audio src="../../mp3/025.mp3"></audio>
+		<audio src="../../mp3/030.mp3"></audio>
+		<audio src="../../mp3/040.mp3"></audio>
+		
+		<div class="wrap">
+			<div class="all">
+				<div>
+					<p class="p1">A</p>
+					<div></div>
+				</div>
+				<div>
+					<p class="p1">S</p>
+					<div></div>
+				</div>
+				<div>
+					<p class="p1">D</p>
+					<div></div>
+				</div>
+				<div>
+					<p class="p1">J</p>
+					<div></div>
+				</div>
+				<div>
+					<p class="p1">K</p>
+					<div></div>
+				</div>
+				<div>
+					<p class="p1">L</p>
+					<div></div>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/封装函数.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			//获取元素
+			var ps=document.getElementsByTagName("p");
+			var divs=qa(".wrap .all div div");
+			var mps=qa("audio");
+			//是否播放的判断
+			var playornot=true;
+			//键值数组
+			var keycodeArr=[65,83,68,74,75,76];
+			//p随机颜色的赋值
+			randArrColor(ps,123,245,"backgroundColor");
+			//高度div的颜色赋值 ： 同对应p的颜色相同
+			for(var i=0;i<divs.length;i++){
+				divs[i].timer=null;
+				divs[i].style.backgroundColor=getCss(ps[i],"backgroundColor");
+			}
+
+			//按键按下
+			document.onkeydown=function(ev){
+				var e=ev || window.event;
+/*				if(e.keyCode==65){
+					zeng(divs[0]);
+				}
+				if(e.keyCode==83){
+					zeng(divs[1]);
+				}
+				if(e.keyCode==68){
+					zeng(divs[2]);
+				}
+				if(e.keyCode==74){
+					zeng(divs[3]);
+				}
+				if(e.keyCode==75){
+					zeng(divs[4]);
+				}
+				if(e.keyCode==76){
+					zeng(divs[5]);
+				}*/
+				//遍历键码值比对
+				for (var k=0;k<keycodeArr.length;k++) {
+					if(e.keyCode==keycodeArr[k]){
+						//音乐的播放
+						if(playornot){
+							//开始时播放的时间，让每次点击都从头开始
+							mps[k].currentTime=0;
+							mps[k].play();
+							//只能播放一次
+							playornot=false;
+						}
+						//改变高度
+						move(divs[k],{
+							"height":200
+						},10);
+						//改变透明度
+						move(ps[k],{
+							"opacity":1
+						},0.01);
+					}
+				}
+			}
+			
+			//按键抬起
+			document.onkeyup=function(ev){
+				var e=ev || window.event;
+				//遍历键码值比对
+				for (var k=0;k<keycodeArr.length;k++) {
+					if(e.keyCode==keycodeArr[k]){
+						//音乐停止
+						mps[k].pause();
+						//可以播放
+						playornot=true;
+						//改变高度
+						move(divs[k],{
+							"height":0
+						},-10);
+						//改变透明度
+						move(ps[k],{
+							"opacity":0.5
+						},-0.01);
+					}
+				}
+			}
+			
+			//运动函数
+			function move(who,sjson,speed,fn){
+				clearInterval(who.timer);
+				who.timer=setInterval(function(){
+					//遍历集合
+					for (var attrbute in sjson) {
+						//键值对的键值，即属性的已定义
+						var sTarget=sjson[attrbute];
+						//实时获取对应键值对的值，即属性的值
+						var num=pfGetcss(who,attrbute);
+						
+						//上面输入一个终点值，判断是否到达这个终点
+						//到达终点
+						if(num==sTarget){
+							//清除定时器
+							clearInterval(who.timer);
+//							if(fn){
+//								fn();
+//							}
+						}else{
+							//因为透明度没有单位，所以需要单独判断
+							if(attrbute=="opacity"){
+								who.style[attrbute]=num+speed;
+							}else{
+								//其余情况需要带有单位
+								//当有多个属性定义时，需要根据情况判断
+								who.style[attrbute]=num+speed+"px";
+							}
+						}
+					}
+				},20);
+			}
+			
+			
+			/*function zeng(who){
+				clearInterval(who.timer);
+				who.timer=setInterval(function(){
+					if(who.offsetHeight>=300){
+						clearInterval(who.timer);
+					}else{
+						who.style.height=who.offsetHeight+10+"px";
+					}
+				},10);
+			}
+			
+			function jian(who){
+				clearInterval(who.timer);
+				who.timer=setInterval(function(){
+					if(who.offsetHeight<=0){
+						clearInterval(who.timer);
+					}else{
+						who.style.height=who.offsetHeight-10+"px";
+					}
+				},10);
+			}
+			
+			document.onkeyup=function(ev){
+				var e=ev || window.event;
+				if(e.keyCode==65){
+					jian(divs[0]);
+				}
+				if(e.keyCode==83){
+					jian(divs[1]);
+				}
+				if(e.keyCode==68){
+					jian(divs[2]);
+				}
+				if(e.keyCode==74){
+					jian(divs[3]);
+				}
+				if(e.keyCode==75){
+					jian(divs[4]);
+				}
+				if(e.keyCode==76){
+					jian(divs[5]);
+				}
+			}*/
+		</script>
+	</body>
+</html>

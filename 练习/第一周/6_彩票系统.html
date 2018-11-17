@@ -1,0 +1,130 @@
+<!--<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>彩票系统</title>
+		<style>
+			#div1{
+				font-weight: 600;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="button" name="" id="btn" value="来一组打机" />
+		<div id="div1"></div>
+		
+		<script type="text/javascript">
+			
+			var btn=document.getElementById("btn");
+			var myDiv=document.getElementById("div1");
+			
+			function suiji(len){
+				//每次执行都会刷新
+				var arr=[];
+				while(arr.length<len){
+					var zi=Math.floor(Math.random()*(99+1-1)+1);
+					if(arr.indexOf(zi)== -1){
+						arr.push(zi);
+					}
+				}
+				return arr;	
+			}
+			var timer=null;
+			btn.onclick=function(){
+				clearInterval(timer);
+				var count=0;
+				timer=setInterval(function(){
+//					console.log(suiji(7));
+					myDiv.innerHTML=suiji(7);
+					count++;
+					if(count==7){
+						clearInterval(timer);
+					}
+				},300);
+			}
+		</script>
+	</body>
+</html>-->
+	
+	
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<input type="button" class="btn" value="在来一组" />
+		<div class="screen">1,2,3,4,5,6,7</div>
+		<script type="text/javascript">
+			var myBtn = document.querySelector(".btn");
+			var myScr = document.querySelector(".screen");
+			//滚动定时器
+			var rollTimer = null;
+			
+			
+			roll();
+			myBtn.onclick = function(){
+				//事件执行之前，先清除定时器
+				clearInterval(rollTimer);
+				//滚动>随机彩票
+				roll();
+			}
+			
+			//随机彩票
+			function randArr(){
+				//彩票数组
+				var arr = [];
+				/*
+				for(var i = 0; i < 7; i++){
+					//随机一个数字
+					var randNum = rand(1,35);
+					//先判断数组中是否存在这个数
+					//不存在就放进去，如果存在就不放，并且退回上一次循环i--
+					if(arr.indexOf(randNum) == -1){
+						arr.push(randNum);
+					}else{
+						i--; 
+					}
+				}
+				*/
+				//去重
+				while(arr.length < 7){
+					var randNum = rand(1,35);
+					if(arr.indexOf(randNum) == -1){
+						arr.push(randNum);
+					}
+				}
+				
+				return arr;
+			}
+			//滚动
+			function roll(){
+				//定义滚动时间（次数）
+				var rollTime = 50;
+				rollTimer = setInterval(function(){
+					//当滚动时间到了
+					if(rollTime == 0){
+						//停止定时器
+						clearInterval(rollTimer);
+					}else{
+						//时间--
+						rollTime--;
+					}
+					//显示滚动的彩票
+					myScr.innerHTML = randArr();
+				},10);
+			}
+			
+			//随机数
+			function rand(min,max){
+				return Math.floor(Math.random()*(max+1-min)+min);
+			}
+			
+			
+			
+			
+		</script>
+	</body>
+</html>
+

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>空心菱形</title>
+		<style type="text/css">
+			div{
+				width: 40px;
+				height: 40px;
+				background-color: red;
+				display: inline-block;
+				margin: 1px 2px;
+			}
+			.bk{
+				background-color: green;
+			}
+		</style>
+	</head>
+	<body>
+		<script type="text/javascript">
+			
+//			for(var i=0;i<5;i++){
+//				for (var j=0;j<4-i;j++) {
+//					document.write("<div class='kg'></div>")
+//				}
+//				for (var k=0;k<1;k++) {
+//					document.write("<div class='bk'></div>")
+//				}
+//				for (var k=0;k<2*i-1;k++) {
+//					document.write("<div class='kg'></div>")
+//				}
+//				for (var k=0;k<2*i-1;k++) {
+//					document.write("<div class='kg'></div>")
+//				}
+//				document.write("<br>");
+//			}
+
+
+			for(var i = 0; i < 5; i++){
+				//04 13 22 31 40
+				for(var j = 0; j < 4 - i; j++){
+					document.write("<div class='kg'></div>");
+				}
+				for(var k = 0; k < 1; k++){
+					document.write("<div class='bk'></div>");
+				}
+				//00 11 23 35 47
+				for(var k = 0; k < 2 * i - 1; k++){
+					document.write("<div class='kg'></div>");
+				}
+				//00 11 21 31 41
+				for(var k = 0; k < 1; k++){
+					if(i == 0){
+						continue;
+					}
+					document.write("<div class='bk'></div>");
+				}
+				document.write("</br>")
+			}
+			
+			for(var m = 0; m < 4; m++){
+				//01 12 23 34
+				for(var n = 0; n < m + 1; n++){
+					document.write("<div class='kg'></div>");
+				}
+				for(var p = 0; p < 1; p++){
+					document.write("<div class='bk'></div>");
+				}
+				//05 13 21 30
+				for(var q = 0; q < 5 - 2*m; q++){
+					document.write("<div class='kg'></div>");
+				}
+				//01 11 21 30
+				for(var l = 0; l < 1; l++){
+					if(m == 3){
+						continue;
+					}
+					document.write("<div class='bk'></div>");
+				}
+				document.write("</br>")
+			}
+		</script>
+		</script>
+	</body>
+</html>

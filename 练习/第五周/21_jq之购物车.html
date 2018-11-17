@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>购物车</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.wrap{
+				margin-top: 80px;
+				position: absolute;
+			}
+			.box{
+				position: relative;
+				margin-bottom: 10px;
+				text-align: center;
+			}
+			.shang{
+				width: 40px;
+				height: 30px;
+				background-color: #CCCCCC;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			.xia{
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100px;
+				height: 100%;
+				color: white;
+				background-color: red;
+				font-size: 18px;
+				text-align: center;
+				z-index: -1;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="box">
+				<div class="shang">>></div>
+				<div class="xia">购物车</div>
+			</div>
+			<div class="box">
+				<div class="shang">>></div>
+				<div class="xia">我的关注</div>
+			</div>
+			<div class="box">
+				<div class="shang">>></div>
+				<div class="xia">我的足迹</div>
+			</div>
+			<div class="box">
+				<div class="shang">>></div>
+				<div class="xia">我的消息</div>
+			</div>
+			<div class="box">
+				<div class="shang">>></div>
+				<div class="xia">咨询JIMI</div>
+			</div>
+		</div>
+		
+		
+		<script src="../../js/jq/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				//设置下面div的left值，使其隐藏
+				$(".xia").css("left",$(".shang").innerWidth()-$(".xia").width()+"px");
+				//鼠标移入事件
+				$(".box").on("mouseenter",function(){
+					$(".xia").eq($(this).index()).stop().animate({
+						left:$(this).innerWidth()
+					},500)
+				});
+				//鼠标移出事件
+				$(".box").on("mouseleave",function(){
+					$(".xia").eq($(this).index()).stop().animate({
+						left:$(".shang").innerWidth()-$(".xia").width()
+					},500)
+				});
+			})
+			
+		</script>
+	</body>
+</html>

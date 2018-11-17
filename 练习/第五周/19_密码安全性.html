@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>密码安全性判断</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.wrap{
+				margin: 10px;
+			}
+			.all{
+				display: flex;
+				align-items: center;
+			}
+			#txt{
+				width: 180px;
+				height: 20px;
+			}
+			.allDiv>div{
+				margin-left: 10px;
+				float: left;
+				width: 20px;
+				height: 6px;
+				border: 1px solid black;
+			}
+			p{
+				margin-top: 3px;
+				font-size: 13px;
+				color: gray;
+				letter-spacing: 1px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="all">
+				<input type="text" name="txt" id="txt" value="" placeholder="请输入密码"/>
+				<div class="allDiv">
+					<div class="div1"></div>
+					<div class="div2"></div>
+					<div class="div3"></div>
+				</div>
+			</div>
+			<p></p>
+		</div>
+		<script src="../../js/封装函数.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			//获取元素
+			var txt=q("#txt");
+			var div1=q(".div1");
+			var div2=q(".div2");
+			var div3=q(".div3");
+			var p=q("p");
+
+			//空白占位符
+			var res=/\s/;
+			//所有数字、字母、下划线
+			var rew=/\w/g;
+			//所有中文
+			var reu=/[\u4e00-\u9fa5]/;
+			//第一位为英文
+			var ree=/^[a-zA-Z]/;
+			//text点击时
+			txt.onclick=function(){
+				p.innerHTML="密码至少为6位，但不超过13位，由数字、字母、下划线组成，首字母为英文字母";
+			}
+			
+			//按键抬起时判断输入的字符串的格式
+			document.onkeyup=function(ev){
+				//获取输入的值
+				var str=txt.value;
+				//判断条件：
+				//里面含有空白占位符、含有中文、第一位不为英文
+				if(str.match(res) || str.match(reu) || !str.match(ree)){
+					p.innerHTML="输入格式不正确！";
+				}else{
+					//在满足输入条件的情况下，把输入的字符串转化为数组
+					var str1=str.match(rew);
+					//判断数组的最大长度和最小长度
+					if(str1.length<6 || str1.length>13){
+						p.innerHTML="请输入正确格式！";
+					}else{
+						//在定义范围内使用
+						p.innerHTML="可以使用！";
+						//第一个div变色
+						div1.style.backgroundColor="red";
+						//长度大于6时判断
+						if(str1.length>6){
+							//第一位为字母，后边位为数字或者字母一种情况时div2变色
+							if(str.match(/^[a-zA-Z][a-zA-Z_]+$/g) || str.match(/^[a-zA-Z][a-zA-Z0-9]+$/g)){
+								div2.style.backgroundColor="yellow";
+								//数字、字母、下划线都含有时div3变色
+							}else if(str.match(rew)){
+								div3.style.backgroundColor="green";
+							}
+						}
+					}
+				}
+			}
+		</script>
+	</body>
+</html>

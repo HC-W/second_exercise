@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>div显隐切换</title>
+		<style>
+			.div1 {
+				width: 100px;
+				height: 100px;
+				background-color: red;
+			}
+		</style>
+	</head>
+
+	<body>
+		<input type="button" name="" id="btn" value="切换" />
+		<div class="div1" id="div1">你好！</div>
+
+		<script type="text/javascript">
+			var myBtn = document.getElementById("btn");
+			var myDiv = document.getElementById("div1");
+			
+			var isShow=true;
+			myBtn.onclick = function(){
+				if(isShow){
+					myDiv.style.display="none";
+				}else{
+					myDiv.style.display="block";
+				}
+				isShow=!isShow;
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>jq之放大镜</title>
+		<style type="text/css">
+			.wrap{
+				overflow: hidden;
+			}
+			.min{
+				width: 350px;
+				height: 350px;
+				border: 1px solid black;
+				float: left;
+				position: relative;
+			}
+			.mb{
+				width: 150px;
+				height: 150px;
+				position: absolute;
+				background-color: rgba(0,0,0,0.3);
+				top: 0;
+				left: 0;
+				display: none;
+				cursor: move;
+			}
+			.max{
+				width: 500px;
+				height: 500px;
+				float: left;
+				border: 1px solid black;
+				overflow: hidden;
+				position: relative;
+				display: none;
+			}
+			.max img{
+				width: 1166.6666666667px;
+				position: absolute;          
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="min">
+				<img src="../../img/datu/min.jpg"/>
+				<div class="mb"></div>
+			</div>
+			<div class="max">
+				<img src="../../img/max.jpg"/>
+			</div>
+		</div>
+		
+		<script src="../../js/jq/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			
+			$(function(){
+				//鼠标移入事件
+				$(".min").on("mouseover",function(){
+					$(".mb").css("display","block");
+					$(".max").css("display","block");
+				});
+				//鼠标移出事件
+				$(".min").on("mouseout",function(){
+					$(".mb").css("display","none");
+					$(".max").css("display","none");
+				});
+				//鼠标移动事件
+				$(".min").on("mousemove",function(ev){
+					$(".mb").css({
+						"left":ev.clientX-$(".mb").width()/2-$(".min").offset().left,
+						"top":ev.clientY-$(".mb").height()/2-$(".min").offset().top
+					});
+					if ($(".mb").position().left<0) {
+						$(".mb").css("left",0);
+					}else if($(".mb").position().left>$(".min").innerWidth()-$(".mb").innerWidth()){
+						$(".mb").css("left",$(".min").innerWidth()-$(".mb").innerWidth());
+					}
+					if ($(".mb").position().top<0) {
+						$(".mb").css("top",0);
+					}else if($(".mb").position().top>$(".min").innerHeight()-$(".mb").innerHeight()){
+						$(".mb").css("top",$(".min").innerHeight()-$(".mb").innerHeight());
+					}
+					
+					//设置大图位置
+					$(".max img").css({
+						"left":-$(".mb").position().left/($(".min").innerWidth()-$(".mb").innerWidth())*($(".max img").innerWidth()-$(".max").innerWidth()),
+						"top":-$(".mb").position().top/($(".min").innerHeight()-$(".mb").innerHeight())*($(".max img").innerHeight()-$(".max").innerHeight())
+					});
+					
+				})
+			})
+		</script>
+		
+		
+	</body>
+</html>

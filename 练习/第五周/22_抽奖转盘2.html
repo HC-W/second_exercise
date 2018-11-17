@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>转盘抽奖2</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.wrap{
+				width: 650px;
+				height: 600px;
+				background: url(../../img/zhuan/kong.jpg) no-repeat;
+				background-size: 100%;
+				margin: 0 auto;
+				position: relative;
+			}
+			.wrap img{
+				position: absolute;
+			}
+			.zhuan{
+				top: 60px;
+				left: 115px;
+			}
+			.zhen{
+				top: 160px;
+				left: 248px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<img src="../../img/zhuan/zhuanpan.png" class="zhuan"/>
+			<img src="../../img/zhuan/choujiang.png" class="zhen"/>
+		</div>
+		
+		<script src="../../js/jq/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/jq/jquery.rotate.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				//判断当前是第几次点击
+				var isOnce = 0;
+				//连续旋转的角度
+				var rotAng = 0;
+				//定时器
+				var timer = null;
+				//点击事件
+				$(".zhen").on("click",function(){
+					//判断第几次点击
+					if(isOnce==0){
+						//旋转
+						$(".zhuan").myRot();
+					}else if(isOnce == 1){
+						//停止
+						$(".zhuan").stopRot();
+					}
+					//每次点击，true和false进行切换
+					isOnce ++;
+				})
+				
+				$.extend({
+					rand:function(min,max){
+						return Math.floor(Math.random()*(max+1-min)*360+min*360);
+					}
+				})
+				
+				$.fn.extend({
+					//旋转
+					"myRot":function(){
+						//再次点击，停止结束的旋转
+						$(".zhuan").stopRotate();
+						clearInterval(timer);
+						timer=setInterval(function(){
+							//角度增加
+							rotAng+=10;
+							$(".zhuan").rotate(rotAng);
+						},10);
+					},
+					//停止旋转
+					"stopRot":function(){
+						//清除自动旋转
+						clearInterval(timer);
+						$(this).rotate({
+							//获取初始角度
+							angle:$(this).getRotateAngle(),
+							//终点角度
+							animateTo:Number($(this).getRotateAngle())+$.rand(1,2),
+							duration:1500,
+							//回调函数
+							callback:function(){
+								var endRotAng = $(".zhuan").getRotateAngle()%360;
+								var kuaiAng=360/7;
+								//判断旋转位置
+								if(endRotAng<1*kuaiAng){
+									alert("免单4999元");
+								}else if(endRotAng<2*kuaiAng){
+									alert("免单50元");
+								}else if(endRotAng<3*kuaiAng){
+									alert("免单10元");
+								}else if(endRotAng<4*kuaiAng){
+									alert("免单5元");
+								}else if(endRotAng<5*kuaiAng){
+									alert("免分期服务费");
+								}else if(endRotAng<6*kuaiAng){
+									alert("提高白条额度");
+								}else if(endRotAng<7*kuaiAng){
+									alert("未中奖");
+								}
+								//计算结果之后，才可以继续被点击
+								isOnce = 0;
+							}
+						})
+					}
+				})
+			})
+		</script>
+	</body>
+</html>

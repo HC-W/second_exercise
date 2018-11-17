@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>上层小游戏</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.wrap{
+				width: 792px;
+				margin: 0 auto;
+			}
+			.score{
+				height: 80px;
+				color: red;
+				font-size: 40px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			.ceng{
+				height: 500px;
+				border: 1px solid green;
+			}
+			.wrap .ceng{
+				position: relative;
+				border-top-color: white;
+			}
+			.wrap .ceng>div{
+				position: absolute;
+				bottom: 0px;
+			}
+			.wrap .ceng>div>div{
+				width: 20px;
+				height: 20px;
+				float: left;
+				background-color: #ccc;
+				border: 1px solid red;
+				/*box-sizing: border-box;*/
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="score">0</div>
+			<div class="ceng">
+				<div class="div1"></div>
+			</div>
+		</div>
+		<script src="../../js/上层小游戏.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

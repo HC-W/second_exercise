@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>转盘抽奖</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.wrap{
+				width: 650px;
+				height: 600px;
+				background: url(../../img/zhuan/kong.jpg) no-repeat;
+				background-size: 100%;
+				margin: 0 auto;
+				position: relative;
+			}
+			.wrap img{
+				position: absolute;
+			}
+			.zhuan{
+				top: 60px;
+				left: 115px;
+			}
+			.zhen{
+				top: 160px;
+				left: 248px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<img src="../../img/zhuan/zhuanpan.png" class="zhuan"/>
+			<img src="../../img/zhuan/choujiang.png" class="zhen"/>
+		</div>
+		
+		<script src="../../js/jq/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/jq/jquery.rotate.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){	
+				//img  zhen的点击事件
+				$(".zhen").on("click",function(){
+					$(".zhuan").myRot();
+				})
+				//静态函数
+				$.extend({
+					"rand":function(min,max){
+						return Math.floor(Math.random()*(max+1-min)*360+min*360);
+					}
+				})
+				
+				//jq函数
+				//旋转
+				$.fn.extend({
+					"myRot":function(){
+						//开始旋转
+						$(this).rotate({
+							angle:0,
+							animateTo:$.rand(3,5),
+							duration:5000,
+							callback:function(){
+								//回调函数
+								//旋转完毕
+								//通过旋转角度，确定旋转的块
+								//获取旋转角度
+								//去掉整圈，获取多余的半圈
+								var rotAng=$(this).getRotateAngle()%360;
+								//每一块所占的角度
+								var kuaiAng=360/7;
+								//从小向大判断
+								if(rotAng<1*kuaiAng){
+									alert("免单4999元");
+								}else if(rotAng<2*kuaiAng){
+									alert("免单50元");
+								}else if(rotAng<3*kuaiAng){
+									alert("免单10元");
+								}else if(rotAng<4*kuaiAng){
+									alert("免单5元");
+								}else if(rotAng<5*kuaiAng){
+									alert("免分期服务费");
+								}else if(rotAng<6*kuaiAng){
+									alert("提高白条额度");
+								}else if(rotAng<7*kuaiAng){
+									alert("未中奖");
+								}
+							}
+						})
+					}
+				})
+				
+			})
+		</script>
+	</body>
+</html>

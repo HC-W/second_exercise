@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>jQ之宽高变化</title>
+		<style type="text/css">
+			.change{
+				width: 100px;
+				height: 100px;
+				background-color: red;
+			}
+		</style>
+	</head>
+	<body>
+		<select name="" id="choose">
+			<option value="width">宽度</option>
+			<option value="height">高度</option>
+			<option value="background-color">背景色</option>
+		</select>
+		<input type="text" name="" id="txt" value="" />
+		<input type="button" name="" id="btn" value="变化" />
+		<div class="change"></div>
+		
+		<!--引入-->
+		<script src="../../js/jq/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				//按钮点击事件
+				$("#btn").on("click",function(){
+					$(".change").css($("#choose").val(),$("#txt").val());
+					
+					//判断input的输入值是否存在
+//					if($("#txt").val()){
+//						//选择选项
+//						switch($("#choose").val()){
+//							case "w":
+//							//宽度变化
+//								$(".change").css("width",$("#txt").val());
+//								break;
+//							case "h":
+//							//高度变化
+//								$(".change").css("height",$("#txt").val());
+//								break;
+//							case "bgc":
+//							//背景色变化
+//								$(".change").css("background-color",$("#txt").val());
+//								break;
+//						}
+//					}
+				})
+			})
+		</script>
+	</body>
+</html>

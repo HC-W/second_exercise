@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>层的变化</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.wrap{
+				background-color: #ccc;
+				position: relative;
+				width: 200px;
+				height: 100px;
+			}
+			.red{
+				background-color: red;
+				width: 10px;
+				height: 10px;
+				position: absolute;
+				bottom: 0;
+				right: 0;
+				/*向上左方向改变大小*/
+				cursor:  nw-resize ;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="red"></div>
+		</div>
+	</body>
+	
+	<script type="text/javascript">
+		//获取元素
+		var wrap=document.querySelector(".wrap");
+		var myRed=document.querySelector(".red");
+		
+		//鼠标按下事件
+		myRed.onmousedown=function(ev){
+			//鼠标移动事件
+			var e=ev || window.event;
+			var mouseX=e.clientX;
+			var mouseY=e.clientY;
+			//获取red的位置信息
+			var divX=myRed.offsetLeft;
+			var divY=myRed.offsetTop;
+			//获取整个浏览器的页面宽高
+			var ymX=window.innerWidth;
+			var ymY=window.innerHeight;
+			console.log(ymX,ymY);
+			//鼠标移动事件
+			document.onmousemove=function(ee){
+				//获取鼠标移动的位置信息
+				var e2=ee || window.event;
+				var nowX=e2.clientX;
+				var nowY=e2.clientY;
+				//获取差值，取偏移量
+				var chaX=nowX-mouseX;
+				var chaY=nowY-mouseY;
+				//给wrap的宽高赋值
+				if(wrap.offsetWidth<ymX || wrap.offsetHeight<ymY){
+					myRed.style.left=divX+chaX+"px";
+					myRed.style.top=divY+chaY+"px";
+					wrap.style.width=myRed.offsetLeft+myRed.offsetWidth+"px";
+					wrap.style.height=myRed.offsetTop+myRed.offsetHeight+"px";
+				}
+//				console.log(wrap.offsetWidth,wrap.offsetHeight);
+			}
+		}
+		//鼠标抬起事件
+		document.onmouseup=function(){
+			//移动事件终止
+			document.onmousemove=false;
+		}
+	</script>
+</html>

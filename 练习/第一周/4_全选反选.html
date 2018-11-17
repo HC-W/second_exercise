@@ -1,0 +1,126 @@
+<!--<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="wrap">
+			<input type="checkbox" id="all" />
+			<input type="button" name="btn" id="btn1" value="全选" />
+			<input type="button" name="btn" id="btn2" value="反选" />
+			<div id="div1">
+				<input type="checkbox" name="check" class="check check2" value="" />
+				<input type="checkbox" name="check" class="check check2" value="" />
+				<input type="checkbox" name="check" class="check check2" value="" />
+				<input type="checkbox" name="check" class="check check2" value="" />
+			</div>
+		</div>
+		<script type="text/javascript">
+			var _wrap=document.getElementById("wrap");
+			var myAll=document.getElementById("all");
+			var myBtn1=document.getElementById("btn1");
+			var myBtn2=document.getElementById("btn2");
+			var myBtn1=document.getElementById("div1");
+			var myBtn1=document.getElementsByTagName("div");
+			myBtn1.onclick=function(){
+				for (var i=0;i<myCheck.length;i++) {
+						myCheck[i].checked=true;
+				}
+			}
+			myBtn2.onclick=function(){
+				for (var j=0;j<myCheck.length;j++) {
+//					if(myCheck[j].checked){
+//						myCheck[j].checked=false;
+//					}else{
+//						myCheck[j].checked=true;
+//					}
+					myCheck[j].checked=!myCheck[j].checked;
+						
+				}
+			}
+		</script>
+
+	</body>
+</html>-->
+
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#wrap{
+				background-color: red;
+				display: inline-block;
+				border-radius: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<input type="checkbox" id="all" />
+			<input type="button" id="qx" value="全选" />
+			<input type="button" id="fx" value="反选" />
+			<div id="div1">
+				<input type="checkbox" />
+				<input type="checkbox" />
+				<input type="checkbox" />
+				<input type="checkbox" />
+				<input type="checkbox" />
+			</div>
+		</div>
+		<script type="text/javascript">
+			var _wrap = document.getElementById("wrap");
+			var myAll = document.getElementById("all");
+			var btnQx = document.getElementById("qx");
+			var btnFx = document.getElementById("fx");
+			var myDiv = document.getElementById("div1");
+			var myInp = myDiv.getElementsByTagName("input");
+			
+			//全选
+			btnQx.onclick = function(){
+				//遍历
+				for(var i = 0; i < myInp.length; i++){
+					//所有都变成true
+					myInp[i].checked = true;
+				}
+			}
+			//反选
+			btnFx.onclick = function(){
+				for(var i = 0; i < myInp.length; i++){
+					/*if(myInp[i].checked){
+						myInp[i].checked = false;
+					}else{
+						myInp[i].checked = true;
+					}*/
+					myInp[i].checked = !myInp[i].checked;
+				}
+			}
+		
+			//all按钮判断
+			_wrap.onclick = function(){
+				//计数器(计算被选中input的数量)
+				var count = 0;
+				for(var i = 0; i < myInp.length; i++){
+					if(myInp[i].checked){
+						count++;
+					}else{
+						//如果遇到一个不为true，后面没必要再执行
+						break;
+					}
+				}
+				//如果被选中的数量==总长度
+				if(count == myInp.length){
+					myAll.checked = true;
+				}else{
+					myAll.checked = false;
+				}
+			}
+			
+			
+		</script>
+	</body>
+</html>
+

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>水仙花数</title>
+	</head>
+	<body>
+		
+		<script type="text/javascript">
+			var count=0;
+			for (var i=100;i<=999;i++) {
+				//取三位数的百位数字
+				var a=parseInt(i / 100);
+//				console.log(i);
+//				console.log(a);
+				//取三位数的十位数字
+				var b=parseInt((i % 100) / 10);
+				//取三位数的个位数字
+				var c=parseInt(i % 10);
+				//每个数的立方相加和
+				var sum=Math.pow(a,3)+Math.pow(b,3)+Math.pow(c,3);
+//				console.log(sum);
+				if(sum==i){
+					var d=count+1;
+					document.write("第"+d+"个水仙花数的数字为："+i);
+//					document.write(i);
+					document.write("<br>");
+					count++;
+				}
+			}
+			document.write("水仙花数共有"+count+"个。");
+		</script>
+	</body>
+</html>

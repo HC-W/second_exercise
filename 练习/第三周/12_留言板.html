@@ -1,0 +1,267 @@
+<!--<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>留言板</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.wrap{
+				margin: 0 auto;
+				width: 400px;
+				border: 3px solid black;
+				padding: 30px;
+			}
+			.txt{
+				width: 400px;
+				height: 150px;
+			}
+			.p1{
+				text-align: right;
+			}
+			#btn{
+				padding: 3px 6px;
+				background-color: orange;
+				border-width: 1px;
+				cursor: pointer;
+			}
+			.screen>div{
+				width: 400px;
+				margin-top: 15px;
+				position: relative;
+				top: -208px;
+			}
+			.screen>div>textarea{
+				width: 100%;
+				min-height: 80px;
+				background-color: #ccc;
+				border-radius: 8px;
+			}
+			.screen>div>div{
+				width: 15px;
+				height: 15px;
+				text-align: center;
+				color: black;
+				font-weight: 900;
+				background-color: #ccc;
+				position: absolute;
+				top: 10px;
+				right: -17px;
+				cursor: pointer;
+			}
+			.screen>div>p{
+				width: 100%;
+				text-align: right;
+				font-size: 12px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<textarea name="" rows="" cols="" class="txt"></textarea>
+			<p class="p1">140字以内</p>
+			<input type="button" name="btn" id="btn" value="发布" />
+			<div class="screen">
+				<div style="height: 0;background-color: white;"></div>
+			</div>
+		</div>
+		<script src="../../js/tween.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			//获取元素
+			var txt=document.querySelector(".txt");
+			var btn=document.getElementById("btn");
+			var scr=document.querySelector(".screen");
+//			console.log(txt,btn,scr);
+			var timer=null;
+			//点击事件
+			btn.onclick=function(){
+				//获取输入留言板的value
+				var txtValue=txt.value;
+				//判断，当输入框里面有东西才执行点击事件
+				if(txtValue){
+					//获取div中的第一个元素子节点
+					var div1=scr.firstElementChild;
+	//				console.log(div1);
+					var newDiv=document.createElement("div");
+					//创建新的文本域，用于接收上面的value值
+					var newText=document.createElement("textarea");
+					//设置新创建的各属性的值：可读不可写
+					newText.setAttribute("readonly","readonly");
+					//把获取到的输入值传递给下面的输出内容
+					newText.innerHTML=txtValue;
+					//将上面输入框的内容消除
+					txt.value="";
+					//创建新的删除按钮
+					var newBtn=document.createElement("div");
+					newBtn.innerHTML="×";
+					
+					//创建显示事件的p
+					var newP=document.createElement("p");
+					//获取本地时间并赋值
+					var newDate=new Date();
+					var myYear=newDate.getFullYear();
+					var myMonth=newDate.getMonth()+1;
+					var myDay=newDate.getDate();
+					var myWeek=newDate.getDay();
+					var myHours=newDate.getHours();
+					var myMin=newDate.getMinutes();
+					var mySec=newDate.getSeconds();
+					newP.innerHTML=myYear+"/"+myMonth+"/"+myDay+"&nbsp;星期"+myWeek+"&nbsp;"+myHours+":"+myMin+":"+mySec;
+					
+					roll();
+					//将新建的文本域添加到div中
+					newDiv.appendChild(newText);
+					newDiv.appendChild(newBtn);
+					newDiv.appendChild(newP);
+					scr.insertBefore(newDiv,div1);
+					
+					//点击删除事件
+					newBtn.onclick=function(){
+						this.parentNode.remove();
+					}
+				}
+				
+				//运动函数
+				function roll(){
+					var t=0;
+					var d=100;
+					var b=-208;
+					console.log(b);
+					var c=208;
+					clearInterval(timer);
+					timer=setInterval(function(){
+						if(t==d){
+							clearInterval(timer);
+						}else{
+							newDiv.style.top=Tween.Bounce.easeOut(t,b,c,d)+"px";
+							t++;
+						}
+					},1);
+				}
+			}
+		</script>
+	</body>
+</html>-->
+
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.div1{
+				width: 500px;
+				margin: 0 auto;
+				border: 5px solid black;
+				padding: 40px;
+			}
+			.txt{
+				width: 500px;
+				height: 200px;
+			}
+			.txtAr{
+				width: 500px;
+				position: relative;
+				top: -250px;
+				margin-bottom: 20px;
+			}
+			.txtChild{
+				width: 500px;
+				height: 100px;
+				background-color: #ccc;
+				border-radius: 10px;
+				/*white-space: wrap;*/
+				/*box-shadow: 4px 4px 2px 0 black inset;*/
+			}
+			.close{
+				width: 25px;
+				height: 25px;
+				position: absolute;
+				right: -25px;
+				top: 20px;
+				border: 1px solid black;
+				background-color: #ccc;
+				text-align: center;
+			}
+			.time{
+				
+			}
+			.enter{
+				width: 50px;
+				height: 25px;
+				background-color: orange;
+				/*padding: 0 5px;*/
+				text-align: center;
+				color:white;
+				cursor: pointer;
+				border: 1px solid #aaa;
+			}
+			.footer{
+				padding-top: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="div1">
+			<textarea class="txt" name="" rows="" cols=""></textarea>
+			<div class="enter">发布</div>
+			<div class="footer">
+				<div></div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			
+			var myTxt = document.querySelector(".txt");
+			var myEnter = document.querySelector(".enter");
+			var myFooter = document.querySelector(".footer");
+		
+			//点击
+			myEnter.onclick = function(){
+				if(myTxt.value != ""){
+					//生成留言
+					var newLiuyan = document.createElement("div");
+					newLiuyan.className = "txtAr";
+					var newNeirong = document.createElement("div");
+					newNeirong.className = "txtChild";
+					newNeirong.innerHTML = myTxt.value;
+					var newGuanbi = document.createElement("div");
+					newGuanbi.innerHTML = "x";
+					newGuanbi.className = "close";
+					newGuanbi.onclick = function(){
+						this.parentNode.remove();
+					}
+					newLiuyan.appendChild(newGuanbi);
+					newLiuyan.appendChild(newNeirong);
+					myFooter.insertBefore(newLiuyan,myFooter.firstChild);
+					newLiuyan.speed = 5;
+					
+					//重置文本域内容
+					myTxt.value = "";
+					//移动
+					clearInterval(newLiuyan.timer);
+					console.log(getCss(newLiuyan,"top"));
+					newLiuyan.timer = setInterval(function(){
+						if(getCss(newLiuyan,"top") == 0){
+							clearInterval(newLiuyan.timer);
+						}else{
+							newLiuyan.style.top = getCss(newLiuyan,"top") + newLiuyan.speed + "px";
+						}
+					},1);
+				}else{
+					alert("内容不能为空");
+				}
+				
+				
+			}
+			
+			function getCss(who,css){
+				return parseFloat(getComputedStyle(who)[css]);
+			}
+			
+		</script>
+	</body>
+</html>
+

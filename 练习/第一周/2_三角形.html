@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>三角形</title>
+	</head>
+	<body>
+		<input type="text" name="" id="in1" value="" />
+		<input type="text" name="" id="in2" value="" />
+		<input type="text" name="" id="in3" value="" />
+		
+		<input type="button" name="" id="btn" value="" />
+		<div id="div1"></div>
+		
+		
+		<script type="text/javascript">
+			var myIn1=document.getElementById("in1");
+			var myIn2=document.getElementById("in2");
+			var myIn3=document.getElementById("in3");
+			
+			var myDiv=document.getElementById("div1");
+			var myBtn=document.getElementById("btn");
+			
+			myBtn.onclick=function(){
+				var a=Number(myIn1.value);
+				var b=Number(myIn2.value);
+				var c=Number(myIn3.value);
+				
+				if(isNaN(a) || isNaN(b) || isNaN(c) || a<=0 || b<=0 || c<=0){
+					alert("输入有误！");
+				}else{
+					if(a+b>c && a+c>b && b+c>a){
+						myDiv.innerHTML="可以组成三角形";
+					}else{
+						myDiv.innerHTML="不能组成三角形";
+					}
+				}
+			}
+		</script>
+		
+	</body>
+</html>

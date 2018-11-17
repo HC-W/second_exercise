@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>轮播图</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+
+			body {
+				background-color: gray;
+			}
+
+			.box {
+				width: 600px;
+				height: 400px;
+				margin: 100px auto;
+				position: relative;
+				overflow: hidden;
+			}
+
+			img {
+				width: 600px;
+				height: 400px;
+				float: left;
+				/* display: block; */
+				position: absition;
+				top: 0;
+			}
+
+			.content {
+				width: 600;
+				height: 400px;
+				position: relative;
+				overflow: hidden;
+				left: 0;
+			}
+
+			.ctrl {
+				width: 45px;
+				height: 30px;
+				color: ghostwhite;
+				text-align: center;
+				line-height: 30px;
+				outline: none;
+				border: none;
+				background: none;
+				font-size: 30px;
+				position: absolute;
+				z-index: 20;
+				top: 45%;
+				display: none;
+			}
+
+			.next {
+				right: 0;
+			}
+			
+			.dot{
+				width: 100%;
+				height: 50px;
+				position: relative;
+				bottom: 50px;
+				text-align: center;
+				line-height: 50px;
+				background-color: #00FFFF;
+			}
+			
+			.dot div{
+				display: inline-block;
+				width: 10px;
+				height: 10px;
+				border: 3px solid red;
+				border-radius: 50%;
+				background-color:black;
+			}
+			
+			
+			.dot  .selected{
+				background-color:yellow;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<button class="ctrl prev"><</button> 
+			<button class="ctrl next">></button>
+			<div class="content">
+				<img src="img/01.jpg" />
+				<img src="img/02.jpg" />
+				<img src="img/03.jpg" />
+				<img src="img/04.jpg" />
+				<img src="img/05.jpg" />
+				<img src="img/06.jpg" />
+			</div>
+			
+			
+			<div class="dot">
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+				<div></div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+	<script>
+		$(function() {
+			var index = 0
+			//给箭头设置显示动作
+			$('.box').hover(function() {
+				$('.ctrl').show(500)
+			}, function() {
+				$('.ctrl').hide(500)
+			})
+
+			$('.dot div').eq(index).attr('class','selected');
+			//给prev按钮添加动作
+			// $('.prev').click(function() {
+			// 	//判断当前是否正在动画过程
+			// 	if ($('.content').is(':animated')) {
+			// 		return
+			// 	}
+			// 	index++;
+			// 	if (index <= -1) {
+			// 		index = 5
+			// 	}
+			// 	for(var k=0;k<$('.content>img').length;k++){
+			// 		$('.content>img')[k].animate({
+			// 			left: $(".content>img")[k].left()<="-3000px"?-index*$(".content>img").width():"600px"
+			// 		}, 'slow', 'linear')
+			// 	}
+				
+			// })
+			$("img").each(function(){
+				$(this).css();
+			})
+			$('.next').click(function() {
+				// console.log(index);
+				//判断当前是否正在动画过程
+				if ($('.content').is(':animated')) {
+					return
+				}
+				index++;
+				if (index <= -1) {
+					index = 5
+				}
+				for(var k=0;k<$('.content>img').length;k++){
+
+					$('.content>img')[k].animate({
+						left: $(".content>img")[k].left()<="-3000px"?-index*$(".content>img").width():"600px"
+					}, 'slow', 'linear')
+				}
+					$('.dot div').eq(index).addClass('selected').siblings().removeClass('selected')
+			})
+			//设置定时器当进入页面轮播图自动运行,当鼠标进入box停止自动轮播
+			var timer = null
+			start()
+			function start(){
+				timer = setInterval(function(){
+					if(++index == 5){
+						index = 0
+					}
+					
+				},500)
+			}
+			//给小圆点添加事件,当点击任意一个小圆点,显示当前位置的图片
+			$(".dot>div").click(function(){
+				// console.log($(this).index());
+				index=$(this).index();
+				$(".content").animate({
+					left:-$(this).index()*$(".content>img").width()
+				},1000)
+				// 所有的按钮颜色都变黑
+				$(".dot>div").attr("class","")
+				// 点击的哪个颜色发生变化
+				$(this).attr("class","selected")
+			})
+			
+		})
+	</script>
+
+</html>

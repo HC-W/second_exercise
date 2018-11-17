@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>鼠标</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.show{
+				background-color: red;
+				font-weight: bold;
+				position: absolute;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="show"></div>
+		<script src="../../js/jq/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+//			var show=document.querySelector(".show");
+//			document.onmousemove=function(ev){
+//				var e=ev || window.event;
+//				show.style.top=e.clientY+"px";
+//				show.style.left=e.clientX+"px";
+//				show.innerHTML=e.clientX+","+e.clientY;
+//			}
+			$(function(){
+				$(document).on("mousemove",function(ev){
+					$(".show").css("top",ev.clientY);
+					$(".show").css("left",ev.clientX+10);
+					$(".show").html(ev.clientX+","+ev.clientY);
+				})
+			})
+		</script>
+	</body>
+</html>

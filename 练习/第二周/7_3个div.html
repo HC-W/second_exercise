@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>3个div宽度变化</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			div{
+				width: 100px;
+				height: 100px;
+				background-color: red;
+				margin-top: 10px;
+			}
+			.div4{
+				width: 1px;
+				height: 350px;
+				position: absolute;
+				top: 0;
+				left: 500px;
+				background-color: green;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="div1"></div>
+		<div class="div2"></div>
+		<div class="div3"></div>
+		<p class="div4"></div>
+		
+		<script type="text/javascript">
+			var divs=document.getElementsByTagName("div");
+			var speed=1;
+			
+			//获取的是数组，所以需要遍历
+			for (var i=0;i<divs.length;i++) {
+				var w=divs[i].offsetWidth;
+//				console.log(w);
+				//给数组中的每个下标代表的元素都定义一个timer
+				divs[i].timer=null;
+				 //鼠标移入事件
+				divs[i].onmousemove=function(){
+					//清除掉鼠标移入的div的timer
+//					clearInterval(this.timer);
+					//保存this
+//					var _this=this;
+					//定时器
+//					this.timer=setInterval(function(){
+						//可见宽到达指定地点时，停止，清除定时器
+//						if(_this.offsetWidth==500){
+//							clearInterval(_this.timer);
+//						}else{
+//							_this.style.width=_this.offsetWidth+speed+"px";
+//						}
+//					},10);
+					///方法2:	
+					//调用函数
+					motion(this,500,1);
+				}
+				divs[i].onmouseout=function(){
+					//方法1：在内部直接书写定时器
+//					clearInterval(this.timer);
+//					var _this=this;
+//					this.timer=setInterval(function(){
+//						if(_this.offsetWidth==w){
+//							clearInterval(_this.timer);
+//						}else{
+//							_this.style.width=_this.offsetWidth-speed+"px";
+//						}
+//					},10);
+//					jian(this);
+					motion(this,w,-1);
+				}
+			}
+			//方法2：把每个定时器单独提出来，复杂程度同方法1一样
+			//封装一个变量，在调用函数时可以自由进行赋值
+//			function jia(t){
+//				clearInterval(t.timer);
+//				
+//				t.timer=setInterval(function(){
+//					if(t.offsetWidth==500){
+//						clearInterval(t.timer);
+//					}else{
+//						t.style.width=t.offsetWidth+speed+"px";
+//					}
+//				},10);
+//			}
+////			
+//			function jian(t){
+//				clearInterval(t.timer);
+//				t.timer=setInterval(function(){
+//					if(t.offsetWidth==w){
+//						clearInterval(t.timer);
+//					}else{
+//						t.style.width=t.offsetWidth-speed+"px";
+//					}
+//				},10);
+//			}
+			
+			//方法3：把相同的地方提出来，不同的地方封装数值，可以在调用的时候单独更改
+			//封装运动
+			function motion(t,endpos,speed){
+				clearInterval(t.timer);
+				t.timer=setInterval(function(){
+					if(t.offsetWidth==endpos){
+						clearInterval(t.timer);
+					}else{
+						t.style.width=t.offsetWidth+speed+"px";
+					}
+				},10);
+			}
+		</script>
+	</body>
+</html>

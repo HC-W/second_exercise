@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>tween动画使用</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.wrap{
+				width: 310px;
+				margin:0 auto;
+			}
+			.wrap .box{
+				float: left;
+				position: relative;	
+				border:1px solid black;
+				cursor: pointer;
+			}
+			.wrap .box .bp{
+				width: 100px;
+				height: 20px;
+				text-align: center;
+				background-color: #94F930;
+				
+			}
+			.wrap .box .zi{
+				display: inline-block;
+				width: 100%;
+				overflow: hidden;
+				text-align: center;
+				position: absolute;
+				background-color: #CCCCCC;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="box">
+				<p class="bp">首页</p>
+				<div class="zi">
+					<p>AAA</p>
+					<p>BBBBBBB</p>
+					<p>CCCCCCCC</p>
+				</div>
+			</div>
+			<div class="box">
+				<p class="bp">产品</p>
+				<div class="zi">
+					<p>DDDD</p>
+					<p>EEE</p>
+					<p>FFFFF</p>
+					<p>GGGG</p>
+					<p>TTT</p>
+					<p>PPP</p>
+					<p>AAAADQ</p>
+				</div>
+			</div>
+			<div class="box">
+				<p class="bp">关于</p>
+				<div class="zi">
+					<p>afafddddd</p>
+					<p>sdf</p>
+					<p>adfgshyuj</p>
+					<p>ewtfytr</p>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/tween.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			//定义函数，用来获取元素
+			function q(css){
+				//获取元素的值类型为数组
+				return document.querySelectorAll(css);
+			}
+			
+			//获取元素
+			var myBox=q(".box");
+			var myZi=q(".zi");
+//			console.log(myBox,myZi);	
+			//在移入box时高度变化，所以对box进行遍历
+			for (var i=0;i<myBox.length;i++) {
+				//对每一个bob定义定时器，保证他们不冲突
+				myBox[i].timer=null;
+				//获取下标值
+				myBox[i].index=i;
+				//2：自定义属性保存原始数值
+				myZi[i].h=myZi[i].offsetHeight;
+				myBox[i].hi=myBox[i].offsetHeight;
+//				console.log(myBox[i].hi);
+				//在css样式中设置的话无法获取原始高度，所以在获取完高度以后再赋值
+				myZi[i].style.height=0;
+//				//鼠标移入事件
+				myBox[i].onmouseenter=function(){
+//					把this单独提出来定义
+					var _this=this;
+					var t=0;
+					var b=0;
+					var endpos=myZi[this.index].h;
+//					console.log(endpos);
+					var c=endpos-b;
+					var d=100;
+					//清除定时器
+//					clearInterval(this.timer);
+					//定时器
+//					方法1：内部直接写定时器
+//					this.timer=setInterval(function(){
+//						//判断
+//						if(t==d){
+//							clearInterval(_this.timer);
+//						}else{
+//							//给高度的变化进行赋值
+//							myZi[_this.index].style.height=Tween.Quad.easeOut(t,b,c,d)+"px";
+//							t++;
+//						}
+//					},1);
+					motion(this,t,b,c,d);
+				}
+				//鼠标移出事件
+				myBox[i].onmouseleave=function(){
+//					把this单独提出来定义
+					var _this=this;
+					var t=0;
+					var b=myZi[this.index].h;
+					var endpos=0;
+//					console.log(endpos);
+					var c=endpos-b;
+					var d=100;
+					//清除定时器
+//					clearInterval(this.timer);
+					//定时器
+//					方法1：内部直接写定时器
+//					this.timer=setInterval(function(){
+//						//判断
+//						if(t==d){
+//							clearInterval(_this.timer);
+//						}else{
+//							myZi[_this.index].style.height=Tween.Back.easeInOut(t,b,c,d)+"px";
+//							t++;
+//						}
+//					},1);
+					motion(this,t,b,c,d);
+//					console.log(myZi[this.index].style.height);
+				}
+			}
+
+			//封装函数
+			function motion(k,t,b,c,d){
+				clearInterval(k.timer);
+				k.timer=setInterval(function(){
+					//判断
+					if(t==d){
+						clearInterval(k.timer);
+					}else{
+						myZi[k.index].style.height=Tween.Quad.easeOut(t,b,c,d)+"px";
+						t++;
+					}
+				},1);
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>刚之坦克游戏</title>
+		<style type="text/css">
+			body{
+				background-color: black;
+			}
+			#tank{
+				width: 50px;
+				height: 50px;
+				background: url(../../img/ke.png) no-repeat;
+				-webkit-background-size: 100% 100%;
+				background-size: 100% 100%;
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="tank"></div>
+		<script type="text/javascript">
+			var myTank = document.getElementById("tank");
+			var isLeftStop = true;
+			var isTopStop = true;
+			var isRightStop = true;
+			var isDownStop = true;
+			var timer = null;
+			var mySpeed = 1;
+			document.addEventListener("keydown",down,false);
+			document.addEventListener("keyup",up,false);
+			//按下
+			function down(ev){
+				var e = ev || window.event;
+				switch(e.keyCode){
+					case 37:
+						//左
+						isLeftStop = false;
+						rot(270);
+						move("left",-mySpeed);
+						break;
+					case 38:
+						//上
+						isTopStop = false;
+						rot(0);
+						move("top",-mySpeed);
+						break;
+					case 39:
+						//右
+						isRightStop = false;
+						rot(90);
+						move("left",mySpeed);
+						break;
+					case 40:
+						//下
+						isDownStop = false;
+						rot(180);
+						move("top",mySpeed);
+						break;
+				}
+			}
+			//抬起
+			function up(ev){
+				var e = ev || window.event;
+				switch(e.keyCode){
+					case 37:
+						//左
+						isLeftStop = true;
+						break;
+					case 38:
+						//上
+						isTopStop = true;
+						break;
+					case 39:
+						//右
+						isRightStop = true;
+						break;
+					case 40:
+						//下
+						isDownStop = true;
+						break;
+				}
+				//如果都为true，说明手指全部抬起，停止定时器
+				if(isLeftStop&&isTopStop&&isRightStop&&isDownStop){
+					clearInterval(timer);
+				}
+			}
+			
+			//旋转
+			function rot(rotDeg){
+				myTank.style.transform = "rotate("+rotDeg+"deg)";
+			}
+			//移动
+			function move(css,speed){
+				clearInterval(timer);
+				timer = setInterval(function(){
+					myTank.style[css] = getCss(css) + speed + "px";
+				},10);
+			}
+			//获取非行间样式
+			function getCss(css){
+				return parseFloat(getComputedStyle(myTank)[css]);
+			}
+		</script>
+	</body>
+</html>
+

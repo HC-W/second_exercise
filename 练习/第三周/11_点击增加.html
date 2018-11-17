@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>点击增加</title>
+		<style type="text/css">
+			#div1 input{
+				display: block;
+				margin-top: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="div1">
+			<input type="text" name="in1" id="in1" value="" placeholder="国家"/>
+		</div>
+
+		<script type="text/javascript">
+			var myDiv=document.getElementById("div1");
+			var myIn1=document.getElementById("in1");
+			//增
+			var in2=document.createElement("input");
+			var in3=document.createElement("input");
+			var in4=document.createElement("input");
+			//点击事件
+			myIn1.onclick=function(){
+				var nextIn1=myIn1.nextElementSibling;
+				if(!nextIn1){
+					myDiv.appendChild(in2);
+					in2.type="text";
+					in2.placeholder="省份";
+				}
+			}
+			
+			in2.onclick=function(){
+//				var nextIn2=in2.nextElementSibling;
+//				if(!nextIn2){
+				//方法2：父级节点判断
+				if(in3.parentNode!==myDiv){
+					myDiv.appendChild(in3);
+					in3.type="text";
+					in3.placeholder="市";
+				}
+			}
+			
+			in3.onclick=function(){
+				var nextIn3=in3.nextElementSibling;
+				if(!nextIn3){
+					myDiv.appendChild(in4);
+					in4.type="text";
+					in4.placeholder="区";
+				}
+			}
+		</script>
+	</body>
+</html>

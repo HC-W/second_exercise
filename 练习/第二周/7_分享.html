@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>分享</title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.wrap{
+				display: flex;
+				justify-content: flex-start;
+				align-items: center;
+				position: absolute;
+				left:0;
+			}
+			.red{
+				width: 200px;
+				height: 300px;
+				background-color: red;
+			}
+			.p{
+				background-color: #ECC1CA;
+				border-top-right-radius: 5px;
+				border-bottom-right-radius: 5px;
+				cursor: pointer;
+			}
+			.p span{
+				display: block;
+				line-height: 1.3em;
+				font-weight: bold;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="red"></div>
+			<p class="p">
+				<span>分</span>
+				<span>享</span>
+				<span>到</span>
+			</p>
+		</div>
+		
+		<script type="text/javascript">
+			//获取元素
+			var myWrap=document.querySelector(".wrap");
+			var myRed=document.querySelector(".wrap .red");
+			var myP=document.querySelector(".wrap .p");
+			
+			var w=myRed.offsetWidth;
+//			console.log(myWrap.offsetLeft);
+			myWrap.style.left=-w+"px";
+			//定义一个空的timer，用作下文定时器
+			var timer=null;
+			//定义速度为1，下文的速度可根据需要进行改变
+			var speed=1;
+			//红色div和文字在鼠标移入时都可以让整个层想外移动
+			myRed.onmousemove=function(){
+				//清除在鼠标移出时定义的定时器
+//				clearInterval(timer);
+				//调用移出时所用到的函数
+				motion(0,1)
+//				console.log(myWrap.offsetLeft);
+			}
+			myP.onmousemove=function(){
+//				clearInterval(timer);
+				motion(0,1)
+			}
+			//整个大层鼠标移出时移回去
+			myWrap.onmouseout=function(){
+				//清除鼠标移入时的定时器
+//				clearInterval(timer);
+				//调用移入时用到的函数
+				motion(-w,-1);
+			}
+			//定义函数，鼠标移入时大层移出的函数
+//			function chu(){
+//				timer = setInterval(function(){
+//					//其中所用的是定位，当层的左边相对于页面为0时正好显示出来，此时停止移动
+//					if(myWrap.offsetLeft == 0){
+//						clearInterval(timer);
+//					}else{
+//						//把每次移动得到的left赋值给大层的left
+//						myWrap.style.left = myWrap.offsetLeft + speed + "px";
+//					}
+//				},10);
+//			}
+//			//定义鼠标移出时大层回去时的函数
+//			function hui(){
+//				timer = setInterval(function(){
+//					//这个w代表-200
+//					if(myWrap.offsetLeft == -w){
+//						clearInterval(timer);
+//					}else{
+//						myWrap.style.left = myWrap.offsetLeft - speed + "px";
+//					}
+//				},10);
+//			}
+			
+			function motion(endpos,speed){
+				clearInterval(timer);
+				timer=setInterval(function(){
+					if(myWrap.offsetLeft==endpos){
+						clearInterval(timer);
+					}else{
+						myWrap.style.left=myWrap.offsetLeft+speed+"px";
+					}
+				},10);
+			}
+		</script>
+	</body>
+</html>

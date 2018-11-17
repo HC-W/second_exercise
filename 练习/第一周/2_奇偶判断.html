@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>奇偶判断</title>
+	</head>
+	<body>
+		<input type="text" name="" id="txt" value="" />
+		<input type="button" name="" id="btn" value="确定" />
+		<label id="lb"></label>
+		
+		<script type="text/javascript">
+			var myText=document.getElementById("txt");
+			var myBtn=document.getElementById("btn");
+			var myLabel=document.getElementById("lb");
+			
+			myBtn.onclick=function(){
+				var myInput=parseInt(myText.value);
+				if(isNaN(myInput) || myInput!=myText.value || myInput<0){
+					alert("数值类型错误，无法判断！");
+				}else{
+					if(myInput%2==0){
+						myLabel.innerHTML=myInput+"为偶数";
+					}else{
+						myLabel.innerHTML=myInput+"为奇数";
+					}
+				}
+			}
+		</script>
+	</body>
+</html>

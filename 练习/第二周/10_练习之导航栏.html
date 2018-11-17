@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>导航栏</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.wrap{
+				width: 450px;
+				margin: 0 auto;
+			}
+			.screen{
+				width: 400px;
+				background-color: #CCCCCC;
+				overflow: hidden;
+			}
+			.screen div{
+				width: 100px;
+				padding: 20px 0;
+				float: left;
+				text-align: center;
+				font-weight: 600;
+				cursor: pointer;
+			}
+			.nav{
+				height: 10px;
+				position: relative;
+			}
+			.nav .bar{
+				width: 100px;
+				height: 10px;
+				border-radius: 10px;
+				background-color: red;
+				position: absolute;
+				bottom: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="screen">
+				<div>导航1</div>
+				<div>导航2</div>
+				<div>导航3</div>
+				<div>导航4</div>
+			</div>
+			<div class="nav">
+				<div class="bar"></div>
+			</div>
+		</div>
+		<script src="../../js/tween.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			window.onload=function(){
+				//获取元素
+				var myWrap=document.querySelector(".wrap");
+				var divs=document.querySelectorAll(".screen div");
+				var bar=document.querySelector(".bar");
+//				console.log(myWrap,divs,bar);
+				//定义用到的变量
+				//速度
+//				var speed=2;
+				//页数
+				var index=0;
+				//定时器
+				var timer=null;
+				//divs的遍历点击
+				for (var i=0;i<divs.length;i++) {
+					//提出下标
+					divs[i].index=i;
+					//后边tween时用到
+					divs[i].w=divs[i].offsetWidth;
+					//点击事件
+//					divs[i].onmouseenter=function(){
+//						move(this);
+//					}
+					divs[i].onmouseover=function(){
+						move(this);
+					}
+				}
+				//方法1：js原生代码：为消除bug，用到了下面定义的按钮点击暂停与启用的函数
+//				//函数封装
+				function move(t){
+					stop();
+					if(index<t.index){
+						//速度为正
+						speed=2;
+						console.log(index);
+					//当点击页数小于当前页数时，导航条向左移动，负方向
+					}else if(index>t.index){
+						//速度为负
+						speed=-2;
+					}
+					//遍历，给每一个点击计算一个最终位置（不知道的先不要定义，往后写，需要了再添加上去）
+					for (var i=0;i<divs.length;i++) {
+						//比较的移动最终位置：第几个 乘以  宽度
+						divs[i].endpos=i*divs[i].offsetWidth;
+					}
+					//把点击的页数赋值给页数（虽然后边不用，但它是变量，用于上面同点击页数的比较）
+					index=t.index;
+					
+					//清除定时器
+					clearInterval(timer);
+					timer=setInterval(function(){
+						//位置的比较，用到了上面定义的位置信息
+						if(bar.offsetLeft==divs[t.index].endpos){
+							//满足时停止定时器
+							clearInterval(timer);
+							start();
+						}else{
+							//不然就改变导航条的位置，让它进行移动
+							bar.style.left=bar.offsetLeft+speed+"px";
+						}
+					},1);
+				}
+				
+				//消除bug：点击事件未到达终点前的中途停止
+				function stop(){
+					for(var i=0;i<divs.length;i++){
+						divs[i].onmousemove=false;
+					}
+				}
+				//消除bug：点击事件未到达终点前的中途停止后继续进行
+				function start(){
+					for(var i=0;i<divs.length;i++){
+						divs[i].onmousemove=function(){
+							move(this);
+						}
+					}
+				}
+				
+				
+				//方法2：使用tween动画框架：不会飞
+				//函数封装
+//				function move(who){
+//					var t=0;
+//					var d=100;
+//					var b=index*who.w;
+//					var endpos=who.index*who.w;
+//					var c=endpos-b;
+//					//把点击的页数赋值给页数（虽然后边不用，但它是变量，用于上面同点击页数的比较）
+//					index=who.index;
+//					//清除定时器
+//					clearInterval(timer);
+//					timer=setInterval(function(){
+//						//位置的比较，用到了上面定义的位置信息
+//						if(t==d){
+//							//满足时停止定时器
+//							clearInterval(timer);
+//						}else{
+//							//不然就改变导航条的位置，让它进行移动
+//							bar.style.left=Tween.Back.easeOut(t,b,c,d)+"px";
+//							t++;
+//						}
+//					},1);
+//				}
+				
+			}
+		</script>
+	</body>
+</html>

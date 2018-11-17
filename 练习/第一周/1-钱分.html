@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>day1获取值</title>
+	</head>
+	<body>
+		<input type="text" name="in1" id="in1" value=""/>
+		<input type="button" name="" id="btn" value="确定" />
+		<div id="div1"></div>
+		<script type="text/javascript">
+			var myButton=document.getElementById("btn");
+			myButton.onclick=function(){
+				var myInput=document.getElementById("in1").value;
+//				console.log(myInput);
+				var myDiv=document.getElementById("div1");
+				var a=parseInt(myInput/20);
+//				console.log(a);
+				var a1=myInput%20;
+				var b=parseInt(a1/10);
+				var b1=a1%10;
+				var c=parseInt(b1/5);
+				var c1=b1%5;
+				var d=parseInt(c1/1);
+				myDiv.innerHTML="这个钱最多能有"+a+"张20元,"+b+"张10元,"+c+"张5元,"+d+"张1元。"
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			div{
+				color: white;
+				width: 100px;
+				height: 100px;
+				background-color: red;
+				font-size: 40px;
+				font-weight: 600;
+				display: none;
+			}
+			.active{
+				background-color: yellow;
+			}
+			.show{
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="button" value="按钮1" class="active"/>
+		<input type="button" value="按钮2"/>
+		<input type="button" value="按钮3"/>
+		<div class="show">A</div>
+		<div>B</div>
+		<div>C</div>
+		
+		<script type="text/javascript">
+			var btns=document.getElementsByTagName("input");
+			var divs=document.getElementsByTagName("div");
+			console.log(btns);
+			console.log(divs);
+			
+			for (var i = 0;i < btns.length; i++) {
+				btns[i].abc=i;
+				btns[i].onclick=function(){
+					for (var j=0;j<btns.length;j++) {
+						btns[j].className="";
+					}
+					this.className="active";
+					
+					for (var k=0;k<divs.length;k++) {
+						divs[k].className="";
+					}
+					divs[this.abc].className="show";
+				}
+			}
+		</script>
+	</body>
+</html>

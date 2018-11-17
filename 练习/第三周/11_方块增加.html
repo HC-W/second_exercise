@@ -1,0 +1,165 @@
+<!--<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>方块增加颜色变化</title>
+		<style type="text/css">
+			.wrap{
+				width: 600px;
+				height: 600px;
+				border:1px solid red;
+			}
+			.screen{
+				overflow: hidden;
+			}
+			.screen div{
+				width: 100px;
+				height: 100px;
+				margin: 10px;
+				float: left;
+			}
+			.screen .div1{
+				background-color: #CCCCCC;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				cursor: pointer;
+			}
+			.sp1{
+				color: white;
+				font-size: 80px;
+				font-weight: bolder;
+			}
+
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="screen">
+				<div class="div1">
+					<span class="sp1">+</span>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+			//获取元素
+			var wrap=document.querySelector(".wrap");
+//			var bodyWd=document.body.offsetWidth;
+//			var bodyHg=document.body.offsetHeight;
+			var scr=document.querySelector(".screen");
+			var div1=scr.querySelector(".div1");
+			//获取margin值
+			var mg=parseFloat(getComputedStyle(div1)["margin"]);
+//			console.log(bodyHg);
+			//div1的点击事件
+			div1.onclick=function(){
+				//条件判断
+				//包含div的层的高度是变化的，所以变化的高度同wrap的高度比较，小于它的时候一直运行
+				if(scr.offsetHeight<wrap.clientHeight || div1.offsetLeft<wrap.clientWidth-mg-div1.offsetWidth){
+					var divE=document.createElement("div");
+					//变量获取三个随机数
+					var a=rand(0,255);
+					var b=rand(0,255);
+					var c=rand(0,255);
+					//div颜色赋值变化
+					divE.style.backgroundColor="rgb("+a+","+b+","+c+")";
+					//把div添加到div1的前面
+					scr.insertBefore(divE,div1);
+					//点击删除事件
+					divE.onclick=function(){
+						scr.removeChild(divE);
+					}
+				}
+			}
+			//随机数函数
+			function rand(min,max){
+				return Math.floor(Math.random()*(max+1-min)+min);
+			}
+		</script>
+	</body>
+</html>-->
+
+
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.wrap{
+				width: 500px;
+				height: 500px;
+				border: 1px solid red;
+				overflow: hidden;
+			}
+			.wrap div{
+				width: 100px;
+				height: 100px;
+				margin: 12.5px;
+				background-color: #ccc;
+				cursor: pointer;
+				text-align: center;
+				line-height: 90px;
+				font-size: 80px;
+				font-weight: bold;
+				color: white;
+				float: left;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="add">+</div>
+		</div>
+		<script type="text/javascript">
+			var myWrap = document.querySelector(".wrap");
+			var myAddBtn = document.querySelector(".add");
+			//计算个数
+			//外框宽度
+			var wrapWidth = myWrap.clientWidth;
+			var wrapHeight = myWrap.clientHeight;
+			//按钮宽度
+			var addWidth = myAddBtn.clientWidth;
+			var addHeight = myAddBtn.clientHeight;
+			//margin值
+			var boxMargin = parseFloat(getComputedStyle(myAddBtn)["margin"])*2;
+			console.log(getComputedStyle(myAddBtn)["margin"]);
+			var numW = Math.floor(wrapWidth/(addWidth+boxMargin));
+			var numH = Math.floor(wrapHeight/(addHeight+boxMargin));
+			//总个数
+			var zongNum = numW * numH;
+			/**/
+			//点击事件
+			myAddBtn.onclick = function(){
+				if(myWrap.children.length < zongNum){
+					//创建小块块
+					var newBox = document.createElement("div");
+	//				newBox.setAttribute("class","box");
+					//随机颜色
+					randColor(newBox,"backgroundColor");
+					//放到页面上
+					myWrap.insertBefore(newBox,this);
+				}else{
+					alert("车满了，上不来了");
+				}
+			}
+			//随机函数
+			function rand(min,max){
+				return Math.floor(Math.random()*(max+1-min)+min);
+			}
+			
+			function randColor(who,_color){
+				var r = rand(125,255);
+				var g = rand(125,255);
+				var b = rand(125,255);
+				//设置颜色rgb(r,g,b);
+				who.style[_color] = "rgb("+r+","+g+","+b+")";
+			}
+			
+		</script>
+	</body>
+</html>
+

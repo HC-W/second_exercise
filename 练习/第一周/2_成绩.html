@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>成绩判断</title>
+	</head>
+	<body>
+		请输入成绩：
+		<input type="text" name="" id="txt" value="" />
+		<input type="button" name="" id="btn" value="判断" />
+		<div id="div1"></label>
+		
+		<script type="text/javascript">
+			var myText=document.getElementById("txt");
+			var myBtn=document.getElementById("btn");
+			var myDiv=document.getElementById("div1");
+			
+			myBtn.onclick=function(){
+				var grade=Number(myText.value);
+				if(isNaN(grade) || grade<0 || grade>100){
+					myDiv.innerHTML="数值错误，请正确输入！";
+				}else{
+					var g=parseInt(grade/10);
+					switch(g){
+						case 10:
+						case 9:
+							myDiv.innerHTML="优秀";
+							break;
+						case 8:
+							myDiv.innerHTML="良好";
+							break;
+						case 7:
+							myDiv.innerHTML="中等";
+							break;
+						case 6:
+							myDiv.innerHTML="及格";
+							break;
+						default:
+							myDiv.innerHTML="不及格";
+							break;
+					}
+				}
+			}
+		</script>
+	</body>
+</html>

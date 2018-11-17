@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>比较</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var a = Number(prompt("请输入第一个值"));
+//			console.log(a);
+			var b = Number(prompt("请输入第二个值"));
+			var c = Number(prompt("请输入第三个值"));
+			if(isNaN(a)||isNaN(b)||isNaN(c)){
+				alert("请输入正确的数值类型！");
+			}else{
+				if(a>b&&a>c){
+					alert("a最大！");
+				}else if(b>a&&b>c){
+					alert("b最大！");
+				}else if(c>a&&c>b){
+					alert("c最大！");
+				}else if(a==b&&b==c){
+					alert("三个值相等！");
+				}else{
+					alert("其它情况");
+				}
+			}
+		</script>
+	</body>
+</html>

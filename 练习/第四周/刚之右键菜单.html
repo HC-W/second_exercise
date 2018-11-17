@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.wrap>.box{
+				width: 100px;
+				background-color: #ccc;
+				position: absolute;
+			}
+			.wrap>.box>div{
+				position: relative;
+			}
+			.wrap>.box div{
+				padding: 10px 0;
+				text-align: center;
+			}
+			.sonListFa{
+				position: absolute;
+				width: 100px;
+			}
+			.sonListFa div{
+				background-color: #ccc;
+				color: black;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap"></div>
+		<script type="text/javascript">
+			var myWrap = document.querySelector(".wrap");
+			
+			document.oncontextmenu = function(ev){
+				//删除
+				remove();
+				var e = ev || window.event;
+				//鼠标位置
+				var posX = e.clientX;
+				var posY = e.clientY;
+
+				//创建父级
+				var newBox = document.createElement("div");
+				newBox.setAttribute("class","box");
+				//修改位置
+				newBox.style.left = posX + "px";
+				newBox.style.top = posY + "px";
+				//放进页面
+				myWrap.appendChild(newBox);
+				//创建1级菜单
+				createMenu1(newBox);
+				
+				
+				//取消系统默认右键事件
+				e.preventDefault();
+			}
+			//一级列表
+			function createMenu1(fa){
+				//创建4个
+				for(var i = 0; i < 4; i++){
+					var newDiv = document.createElement("div");
+					newDiv.innerHTML = "列表"+i;
+					//保存下标
+					newDiv.index = i;
+					fa.appendChild(newDiv);
+					
+					//移入移出
+					newDiv.onmouseenter = function(){
+						this.style.backgroundColor = "red";
+						this.style.color = "white";
+						//创建2级列表
+						createMenu2(this);
+					}
+					newDiv.onmouseleave = function(){
+						this.style.backgroundColor = "";
+						this.style.color = "";
+						this.removeChild(this.firstElementChild);
+					}
+					
+				}
+				//判断边界
+				if(fa.offsetLeft + fa.offsetWidth > window.innerWidth){
+					fa.style.left = fa.offsetLeft - fa.offsetWidth + "px";
+				}
+				if(fa.offsetTop + fa.offsetHeight > window.innerHeight){
+					fa.style.top = fa.offsetTop - fa.offsetHeight + "px";
+				}
+			}
+			//二级列表
+			function createMenu2(fa){
+				var newDiv = document.createElement("div");
+				newDiv.className = "sonListFa";
+	
+				for(var i = 0; i < 4; i++){
+					var newDiv2 = document.createElement("div");
+					newDiv2.innerHTML = "子列表"+i;
+					newDiv.appendChild(newDiv2);
+					newDiv2.onmouseover = function(){
+						this.style.backgroundColor = "red";
+						this.style.color = "white";
+					}
+					newDiv2.onmouseout = function(){
+						this.style.backgroundColor = "";
+						this.style.color = "";
+					}
+				}
+				fa.appendChild(newDiv);
+				
+				//判断边界
+				if(myWrap.firstElementChild.offsetLeft + 2 * fa.offsetWidth > window.innerWidth){
+					var endPosX = -fa.offsetWidth;
+				}else{
+					var endPosX = fa.offsetWidth;
+				}
+				//鼠标位置+点击的列表的下标个他的高度+子列表的高度>屏幕高度
+				//即超出
+				if(myWrap.firstElementChild.offsetTop + 
+					fa.index * fa.offsetHeight + newDiv.offsetHeight
+					> window.innerHeight){
+					var endPosY = -3 * fa.offsetHeight-10;
+				}else{
+					var endPosY = "-10";
+				}
+				
+				//设置位置
+				newDiv.style.top = endPosY + "px";
+				newDiv.style.left = endPosX + "px";
+				
+			}
+			
+			//左键移除
+			document.onclick = function(){
+				remove();
+			}
+			//移除
+			function remove(){
+				//判断是否有子级
+				if(myWrap.firstElementChild){
+					//判断子级是否是box
+					if(myWrap.firstElementChild.getAttribute("class")=="box"){
+						//删除
+						myWrap.removeChild(myWrap.firstElementChild);
+					}
+				}
+			}
+			
+		</script>
+	</body>
+</html>
+

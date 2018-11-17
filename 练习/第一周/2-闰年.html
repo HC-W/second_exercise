@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>闰年</title>
+	</head>
+	<body>
+		<!--请输入年份：<input type="text" name="in" id="in" value="" />
+		<input type="button" name="btn" id="btn" value="判断" />
+		<div id="div1"></div>
+		
+		<script type="text/javascript">
+			var myInput=document.getElementById("in");
+			var myBtn=document.getElementById("btn");
+			var myDiv=document.getElementById("div1");
+			
+			myBtn.onclick=function(){
+				var num=Number(myInput.value);
+				var num1=parseInt(num);
+				if(isNaN(num) || isNaN(num1) || num<=0 || num!=num1){
+					alert("输入错误！");
+				}else{
+					if((num%4==0 && num%100!=0) || (num%400==0)){
+						myDiv.innerHTML=num+"年为闰年。";
+					}
+					else{
+						myDiv.innerHTML=num+"年为平年。";
+					}
+				}
+			}
+		</script>-->
+		
+		<script type="text/javascript">
+			var count=0;
+			for (var i=1000;i<=2000;i++) {
+				if(i%4==0 && i%100!=0 || i%400==0){
+					console.log(i);
+					count++;
+				}
+			}
+			console.log(count);
+		</script>
+	</body>
+</html>

@@ -1,0 +1,360 @@
+<!--<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>小游戏</title>
+		<style>
+			#wrap{
+				width: 250px;
+				margin: 0 auto;
+				border: 1px solid red;
+			}
+			#wrap .top{
+				display: flex;
+				justify-content: space-between;
+			}
+			#wrap .center{
+				width: 100%;
+				font-size: 60px;
+				text-align: center;
+			}
+			#wrap p{
+				font-size: 30px;
+				font-weight: 600;
+				text-align: center;
+			}
+			#wrap .bottom {
+				display: flex;
+				justify-content: space-around;
+			}
+			#wrap .bottom span{
+				font-size: 30px;
+				cursor:pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div class="top">
+				<div class="time">时间：10</div>
+				<div class="grade">得分：0</div>
+			</div>
+			<div class="center">
+			</div>
+			<p>根据上面的字的颜色，从下面选择正确的字</p>
+			<div class="bottom">
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+		</div>
+		
+		
+		<script type="text/javascript">
+			
+			var wrap=document.getElementById("wrap");
+			var time=wrap.querySelector(".top .time");
+			var grade=wrap.querySelector(".top .grade");
+			var da=wrap.querySelector(".center");
+			var bot=wrap.querySelector(".bottom");
+			var spans=wrap.querySelectorAll(".bottom span");
+//			console.log(wrap,time,grade,da,bot)
+//			console.log(spans.length);
+			var h=10;
+			var fs=0;
+			var timer=null;
+			var arrZi=["红","黑","蓝","绿","黄"];
+			var arrColor=["red","black","blue","green","yellow"];
+			//调用：不然不会显示
+			daZi();
+			xiaoZi();
+			function time1(){
+				
+				time.innerHTML="时间："+h;
+				timer=setInterval(function(){
+					h--;
+					if(h==0){
+						alert("gameover!你的分数为:"+fs);
+						clearInterval(timer);
+					}
+						
+					time.innerHTML="时间："+h;
+					
+				},1000);
+			}
+			
+			
+			
+			
+			//0-4
+			function suiji(){
+				return Math.floor(Math.random()*(4+1));
+			}
+			
+			function daZi(){
+				var a1=suiji();
+				var a2=suiji();
+				da.innerHTML=arrZi[a1];
+				da.style.color=arrColor[a2];
+				console.log(a1,a2);
+//				return da.innerHTML;
+			}
+//			console.log(suiji());
+//			da.innerHTML=daZi();
+			
+			function xiaoZi(){
+				var arr1=[];
+				var arr2=[];
+				for (var i=0;i<spans.length;i++) {
+					var aa=suiji();
+					var bb=suiji();
+					if(arr1.indexOf(aa)==-1 && arr2.indexOf(bb)==-1){
+						arr1.push(aa);
+//						console.log(arr1[i]);
+						arr2.push(bb);
+//						console.log(arr2[i]);
+						spans[i].innerHTML=arrZi[aa];
+						spans[i].style.color=arrColor[bb];
+					}else{
+						i--;
+					}
+				}
+//				return spans.innerHTML;
+			}
+//			spans.innerHTML=xiaoZi();
+			
+			for (var k=0;k<spans.length;k++) {
+				spans[k].onclick=function(){
+					if(arrZi.indexOf(this.innerHTML)==arrColor.indexOf(da.style.color)){
+						fs++;
+						grade.innerHTML="得分："+fs;
+						clearInterval(timer);
+						time1();
+						suiji();
+						daZi();
+						xiaoZi();
+					}else{
+						alert("gameover!你的分数为:"+fs);
+						clearInterval(timer);
+					}
+				}
+			}
+			
+			
+			//取消点击事件:两个都可以
+			//再定义一个点击事件，然后让它变为false
+//			for (var i=0;i<arr.length;i++) {
+//				arr[i].onClick=false;
+//			}
+//			for (var i=0;i<arr.length;i++) {
+//				arr[i].onClick=function(){
+//					return false;
+//			}
+
+
+
+
+		</script>
+	</body>
+</html>-->
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin:0;
+			}
+			.wrap{
+				width: 300px;
+				margin: 0 auto;
+				border: 1px solid red;
+				position: relative;
+			}
+			.time,.score{
+				position: absolute;
+				top: 0;
+				font-size: 25px;
+			}
+			.time{
+				left: 0;
+			}
+			.score{
+				right: 0;
+			}
+			.bigText{
+				margin-top: 30px;
+				font-size: 150px;
+				text-align: center;
+			}
+			.rule{
+				font-size: 28px;
+				text-align: center;
+			}
+			.smallText {
+				text-align: center;
+				margin-top: 20px;
+			}
+			.smallText span{
+				font-size: 44px;
+				margin: 0 5px;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<span class="time">时间：0</span>
+			<span class="score">分数：0</span>
+			<p class="bigText">哈</p>
+			<p class="rule">根据上面字的颜色，从下面选择正确的字</p>
+			<div class="smallText">
+				<span>哈</span>
+				<span>哈</span>
+				<span>哈</span>
+				<span>哈</span>
+				<span>哈</span>
+			</div>
+		</div>
+		<script type="text/javascript">
+			
+			function q(selector){
+				return document.querySelector(selector);
+			}
+			var myTime = q(".time");
+			var myScore = q(".score");
+			var myBigText = q(".bigText");
+			var smallTexts = document.querySelectorAll(".smallText span");
+			
+			var colorArr = ["red","green","blue","yellow","black"];
+			var textArr = ["红","绿","蓝","黄","黑"];
+			
+			//游戏得分
+			var gameScore = 0;
+			//游戏定时器
+			var gameTimer = null;
+			//游戏总时间
+			var gameTime = 10;
+			myTime.innerHTML = "时间："+gameTime;
+			
+			randBig();
+			randSmall();
+			
+			//随机大字的文字和颜色
+			function randBig(){
+				//随机颜色
+				var randBigColor = colorArr[rand(0,4)];
+				//随机文字
+				var randBigText = textArr[rand(0,4)];
+				//把随机到的文字和颜色赋给大字
+				myBigText.style.color = randBigColor;
+				myBigText.innerHTML = randBigText;
+			}
+			
+			//随机小字
+			function randSmall(){
+				//定义两个空数组，用来装随机到的文字和颜色
+				var randColorArr = [];
+				var randTextArr = [];
+				//随机颜色
+				while(randColorArr.length < 5){
+					//随机一个颜色
+					var randSmallColor = colorArr[rand(0,4)];
+					//判断是否数组中已经存在该颜色
+					//此时把它专门提出来，是因为随机数每运行一次是随机的，不能保证比较的随机数取值和装进去的随机数取值是相同的
+					if(randColorArr.indexOf(randSmallColor) == -1){
+						//如果不存在，就放进去
+						randColorArr.push(randSmallColor);
+					}
+				}
+				
+				
+				//随机文字
+				while(randTextArr.length < 5){
+					//随机一个文字
+					var randSmallText = textArr[rand(0,4)];
+					//判断是否数组中已经存在该文字
+					if(randTextArr.indexOf(randSmallText) == -1){
+						//如果不存在，就放进去
+						randTextArr.push(randSmallText);
+					}
+				}
+				//把随机到的颜色和文字赋值给小字
+				for(var i = 0; i < smallTexts.length; i++){
+					smallTexts[i].style.color = randColorArr[i];
+					smallTexts[i].innerHTML = randTextArr[i];
+					//给小字加点击事件
+					smallTexts[i].onclick = function(){
+						//判断对错 大字的颜色==小字的内容
+						var nowBigColor = myBigText.style.color;
+						var nowSmallText = this.innerHTML;
+						if(colorArr.indexOf(nowBigColor) 
+						== textArr.indexOf(nowSmallText)){
+							//加分
+//							addScore(1);
+							myScore.innerHTML = "分数："+addScore(1);
+							//重新随机大字小字
+							randBig();
+							randSmall();
+							//重新计时
+							timeFn(1000);
+						}else{
+							//游戏结束，输出得分
+							gameover(gameScore);
+						}
+					}
+				}
+			}
+			
+			//加分
+			function addScore(num){
+				gameScore+=num;
+				return gameScore;
+			}
+			
+			//游戏结束
+			function gameover(s){
+				//清除倒计时
+				clearInterval(gameTimer);
+				alert("gameover，your socre is "+s);
+				//取消点击事件
+				for(var i = 0; i < smallTexts.length; i++){
+					smallTexts[i].onclick = function(){
+						return false;
+					}
+				}
+			}
+			
+			//时间
+			function timeFn(jgTime){
+//				gameTime = 10;
+				myTime.innerHTML = "时间："+gameTime;
+				
+				clearInterval(gameTimer);
+				gameTimer = setInterval(function(){
+					//如果总时间为0
+					if(gameTime == 0){
+						//游戏结束
+						gameover(gameScore);
+					}else{
+						//不为0就递减
+						gameTime --;
+						myTime.innerHTML = "时间："+gameTime;
+					}
+				},jgTime);
+				
+			}
+			
+			//随机函数
+			function rand(min,max){
+				return Math.floor(Math.random()*(max+1-min)+min);
+			}
+
+		</script>
+	</body>
+</html>
+

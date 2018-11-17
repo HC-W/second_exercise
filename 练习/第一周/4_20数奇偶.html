@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>20个数数组的奇偶数</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			//定义数组，长度为20
+			var arr=new Array(20);
+			//定义两个长度为0的数组，用来填充奇数或者偶数
+			var arrJ=new Array(0);
+			var arrO=new Array(0);
+			for(var i=0;i<arr.length;i++){
+				//定义随机数的范围为1-100
+				arr[i]=Math.floor(Math.random()*100+1);
+				//if判断语句：每出来一个随机数判读它的奇偶，然后进行数组的归类
+				if(arr[i]%2==0){
+					//将满足条件的数值从数组尾部添加到数组
+					arrO.push(arr[i]);
+				}else{
+					arrJ.push(arr[i]);
+				}
+			}
+			//console.log(arrO);
+			//输出三个数组
+			var arrt=arr.concat("数组为：",arr)
+			console.log("20数数组为："+arr);
+			console.log(arrt);
+			document.write("奇数数组："+arrJ+"<br>");
+			document.write("偶数数组："+arrO);
+		</script>
+	</body>
+</html>

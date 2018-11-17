@@ -1,0 +1,44 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+.screen{
+	width: 500px;
+	margin: 0 auto;
+	overflow: hidden;
+	position: relative;
+}
+.imgFa{
+	width: 1500px;
+	position: absolute;
+}
+.imgFa img{
+	width: 500px;
+	float: left;
+}
+.btn{
+	position: absolute;
+	bottom: 0;
+	background-color: #ccc;
+	padding: 5px;
+	cursor: pointer;
+}
+.nextBtn{
+	right: 0;
+}
+.lastBtn{
+	right: 60px;
+}
+.smallBtn{
+	width: 200px;
+	margin: 0 auto;
+	text-align: center;
+}
+.smallBtn span{
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	background-color: #ccc;
+	border-radius: 50%;
+	cursor: pointer;
+}

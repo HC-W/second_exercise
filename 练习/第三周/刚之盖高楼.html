@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			.wrap {
+				width: 600px;
+				height: 500px;
+				background-color: #ccc;
+				position: relative;
+				margin: 0 auto;
+			}
+			.wrap .boxFa {
+				position: absolute;
+			}
+			.wrap .boxFa div {
+				width: 20px;
+				height: 20px;
+				background-color: red;
+				border: 1px solid cornflowerblue;
+				box-sizing: border-box;
+				float: left;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="wrap">
+
+		</div>
+		<script type="text/javascript">
+			var myWrap = document.querySelector(".wrap");
+			var rows = 0;
+			var count = 20;
+			var timer = null;
+			var speed = 0;
+			var h = myWrap.clientHeight;
+			var lastLeft = 0;
+			var lastlastLeft = 0;
+			//去掉的个数
+			var chaNum = 0;
+			//游戏结束
+			var isGameOver = false;
+
+			createRow(count, 0);
+			move(myWrap.lastElementChild, 100);
+
+			myWrap.onclick = function() {
+					rows++;
+					if(rows > 1) {
+						lastLeft = myWrap.lastElementChild.offsetLeft;
+						lastlastLeft = myWrap.lastElementChild.previousElementSibling.offsetLeft;
+						chaNum = (lastLeft - lastlastLeft) / myWrap.lastElementChild.lastElementChild.offsetWidth;
+						console.log(count,Math.abs(chaNum));
+						if(count <= Math.abs(chaNum)){
+							alert("gameover");
+							clearInterval(timer);
+							//阻断执行
+							return false;
+						}
+					}
+					removeBox(chaNum);
+			
+					count -= Math.abs(chaNum);
+					
+					if(rows >= 20) {
+						h += 20;
+						myWrap.style.height = h + "px";
+					}
+
+//					if(myWrap.lastElementChild.offsetLeft == 0 || myWrap.lastElementChild.offsetLeft == myWrap.clientWidth - myWrap.lastElementChild.offsetWidth) {
+//						var leftNum = (myWrap.clientWidth - myWrap.lastElementChild.offsetWidth) / 2;
+//					} else {
+					var leftNum = myWrap.lastElementChild.offsetLeft ;
+//					}
+
+					createRow(count, leftNum);
+					move(myWrap.lastElementChild, 100);
+				}
+			
+
+			function createRow(boxLength, leftPos) {
+				var newDiv = document.createElement("div");
+				newDiv.className = "boxFa";
+
+				for(var i = 0; i < boxLength; i++) {
+					var newBox = document.createElement("div");
+					newDiv.appendChild(newBox);
+				}
+				myWrap.appendChild(newDiv);
+
+				newDiv.style.bottom = rows * newDiv.offsetHeight + "px";
+				newDiv.style.left = leftPos + "px";
+			}
+
+			function removeBox(num) {
+//				console.log(num);
+				for(var i = 0; i < Math.abs(num); i++) {
+					myWrap.lastElementChild.removeChild(myWrap.lastElementChild.lastElementChild);
+				}
+				//改位置
+				if(num < 0) {
+					myWrap.lastElementChild.style.left = myWrap.lastElementChild.offsetLeft - num * myWrap.firstElementChild.lastElementChild.offsetWidth + "px";
+				}
+			}
+
+			function move(who, jg) {
+				clearInterval(timer);
+				timer = setInterval(function() {
+					if(who.offsetLeft == 0) {
+						speed = who.firstElementChild.offsetWidth;
+					} else if(who.offsetLeft == myWrap.clientWidth - who.offsetWidth) {
+						speed = -who.firstElementChild.offsetWidth;
+					}
+					who.style.left = who.offsetLeft + speed + "px";
+				}, jg);
+			}
+		</script>
+	</body>
+
+</html>

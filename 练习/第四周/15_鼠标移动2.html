@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>鼠标移动2</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#div1{
+				width: 50px;
+				height: 50px;
+				background-color: plum;
+				border-radius: 50%;
+				position: absolute;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="div1"></div>
+		
+		<script type="text/javascript">
+			//获取元素
+			var myDiv=document.getElementById("div1");
+			//鼠标按下事件
+			myDiv.onmousedown=function(ev){
+				//获取鼠标点击时的初始值
+				var e=ev || window.event;
+				var mouseX=e.clientX;
+				var mouseY=e.clientY;
+				//获取div的位置信息
+				var divX=myDiv.offsetLeft;
+				var divY=myDiv.offsetTop;
+				//鼠标移动事件
+				document.onmousemove=function(ee){
+					//获取鼠标移动的位置信息
+					var e2=ee || window.event;
+					var nowX=e2.clientX;
+					var nowY=e2.clientY;
+					//获取差值，取偏移量
+					var chaX=nowX-mouseX;
+					var chaY=nowY-mouseY;
+					//定义div移动中的位置
+					myDiv.style.left=divX+chaX+"px";
+					myDiv.style.top=divY+chaY+"px";
+				}
+			}
+			//鼠标抬起事件
+			document.onmouseup=function(){
+				//移动事件终止
+				document.onmousemove=false;
+			}
+		</script>
+	</body>
+</html>

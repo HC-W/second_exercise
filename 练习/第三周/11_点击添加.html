@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>点击添加</title>
+		<style type="text/css">
+			ul li{
+				font-size: 14px;
+				line-height: 2em;
+			}
+			input{
+				border-radius: 5px;
+				background-color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="button" name="" id="add" value="添加" />
+		
+		<script type="text/javascript">
+			//定义一个i
+			var i=0;
+			//获取元素
+			var addAll=document.getElementById("add");
+			//增加元素
+			var myUl=document.createElement("ul");
+			//把增加的元素添加到页面
+			document.body.appendChild(myUl);
+			//按钮的点击事件
+			addAll.onclick=function(){
+				//新建li和删除按钮
+				var myLi=document.createElement("li");
+				var btn=document.createElement("input");
+				//定义按钮的属性值
+				btn.type="button";
+				btn.value="删除";
+				i++;
+				myLi.innerHTML="列表项"+i;
+				//把按钮添加到li里面
+				myLi.appendChild(btn);
+				//把li添加到ul中
+				myUl.appendChild(myLi);
+				//删除按钮的点击事件
+				btn.onclick=function(){
+					//删除点击按钮对应的li
+//					myUl.removeChild(myLi);
+//					找寻父级节点删除
+					this.parentNode.remove();
+				}
+			}
+		</script>
+	</body>
+</html>

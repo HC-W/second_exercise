@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>练习之轮播图</title>
+		<style type="text/css">
+			.screen{
+				width: 800px;
+				height: 450px;
+				overflow: hidden;
+				margin: 0 auto;
+				position: relative;
+			}
+			.imgFa{
+				width: 2400px;
+				position: absolute;
+			}
+			.imgFa img{
+				width: 800px;
+				float: left;
+			}
+			.btn{
+				position: absolute;
+				bottom: 0;
+				background-color: #CCCCCC;
+				padding: 5px;
+				cursor: pointer;
+			}
+			.btnleft{
+				right: 80px;
+			}
+			.btnright{
+				right: 0;
+			}
+			.smallBtn{
+				text-align: center;
+			}
+			.smallBtn span{
+				display: inline-block;
+				width: 15px;
+				height: 15px;
+				background-color: #CCCCCC;
+				cursor: pointer;
+				border-radius: 50%;
+			}
+			.smallBtn .red{
+				background-color: red;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="screen">
+				<div class="imgFa">
+					<img src="../../img/1.jpg" alt="" />
+					<img src="../../img/2.jpg" alt="" />
+					<img src="../../img/3.jpg" alt="" />
+				</div>
+				<div class="btn btnleft">LastImg</div>
+				<div class="btn btnright">NextImg</div>
+			</div>
+			<div class="smallBtn">
+				<span class="red"></span>
+				<span></span>
+				<span></span>
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+			//定义函数，用来获取元素
+			function q(css){
+				return document.querySelector(css);
+			}
+			
+			//获取元素
+			var wrap=q(".wrap");
+			var myScr=q(".screen");
+			var myImgFa=q(".imgFa");
+			var myNextBtn=q(".btnright");
+			var myLastBtn=q(".btnleft");
+			var smallBtn=q(".smallBtn");
+			var spans=document.querySelectorAll(".smallBtn span");
+			//检查输出
+			console.log(spans);
+			
+			//获取页数
+			var index=0;
+			//定义速度
+			var speed=0;
+			//定义自动滚动定时器
+			var autoTimer=null;
+			//定义滚动定时器
+			var rollTimer=null;
+			//定义位置
+			var endpos=0;
+			
+			autoRoll();
+			
+			//鼠标移入滚动停止
+			wrap.onmousemove=function(){
+				clearInterval(autoTimer);
+			}
+			//鼠标移出滚动继续
+			wrap.onmouseout=function(){
+				autoRoll();
+			}
+			//下一页按钮点击事件
+			myNextBtn.onclick=function(){
+				//让其回顾初始值位置再进行滚动，就不会出现速度变化太快从而远离的情况
+				myImgFa.style.left=endpos+"px";
+				nextRoll();
+			}
+			//上一页按钮点击事件
+			myLastBtn.onclick=function(){
+				myImgFa.style.left=endpos+"px";
+				lastRoll();
+			}
+			//向上一页滚动函数
+			function lastRoll(){
+				index--;
+				if(index<0){
+					index=2;
+					speed=-10;
+				}else{
+					speed=10;
+				}
+				//调用函数
+				roll();
+			}
+			//向下一页滚动函数
+			function nextRoll(){
+				index++;
+				if(index>=3){
+					index=0;
+					speed=10;
+				}else{
+					speed=-10;
+				}
+				//调用滚动函数
+				roll();
+			}
+			//函数封装
+			function roll(){
+				endpos=-index*myScr.offsetWidth;
+				clearInterval(rollTimer);
+				rollTimer=setInterval(function(){
+					if(myImgFa.offsetLeft==endpos){
+						clearInterval(rollTimer);
+					}else{
+						myImgFa.style.left=myImgFa.offsetLeft+speed+"px";
+					}	
+				},1);
+				//调用颜色变化函数
+				changeColor(spans[index]);
+			}
+			
+			//自动滚动
+			function autoRoll(){
+				clearInterval(autoTimer);
+				autoTimer=setInterval(function(){
+					//自动滚动是向下一张滚动的
+					nextRoll();
+				},2000);
+			}
+			//遍历小按钮
+			for (var i=0;i<spans.length;i++) {
+				spans[i].index=i;
+				spans[i].onclick=function(){
+					//点击按钮时颜色变化
+					changeColor(this);
+					//对点击按钮的下标和当前页面的下标进行比较，然后给速度重新赋值，正负代表方向
+					if(index>this.index){
+						//还要注意下面计算时的加还是减speed
+						//点击下标比当前下标小，整个页面需要向右移动，所以offsetLeft是增大的，速度为正
+						speed=10;
+					}else if(index<this.index){
+						//点击下标比当前下标大，整个页面需要向左移动，所以offsetLeft是减小的，速度为负
+						speed=-10;
+					}
+					index=this.index;
+					roll();
+				}
+			}
+			//颜色变化封装
+			function changeColor(t){
+				for (var j=0;j<spans.length;j++) {
+					spans[j].style.backgroundColor="#ccc";
+				}
+				t.style.backgroundColor="red";
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>坦克小游戏</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			body{
+				background-color: black;
+			}
+			img{
+				width: 40px;
+				height: 40px;
+				position: absolute;
+				transform-origin: center;
+			}
+		</style>
+	</head>
+	<body>
+		<img src="../../img/ke.png" class="img1"/>
+	</body>
+	
+	<script type="text/javascript">
+		//左  上  右  下 
+		//37  38  39  40
+		var img1=document.querySelector(".img1");
+		document.onkeydown=function(ev){
+			var e=ev || window.event;
+			var speed=10;
+			switch(e.keyCode){
+				case 37:
+					img1.style.transform="rotate("+-90+"deg)";
+					img1.style.left=img1.offsetLeft-speed+"px";
+					if(img1.offsetLeft<=0){
+						img1.style.left=0;
+					}
+					break;
+				case 38:
+					img1.style.transform="rotate("+0+"deg)";
+					img1.style.top=img1.offsetTop-speed+"px";
+					if(img1.offsetTop<=0){
+						img1.style.top=0;
+					}
+					break;
+				case 39:
+					img1.style.transform="rotate("+90+"deg)";
+					img1.style.left=img1.offsetLeft+speed+"px";
+					if(img1.offsetLeft>=window.innerWidth-img1.offsetWidth){
+						img1.style.left=window.innerWidth-img1.offsetWidth+"px";
+					}
+					break;
+				case 40:
+					img1.style.transform="rotate("+180+"deg)";
+					img1.style.top=img1.offsetTop+speed+"px";
+					if(img1.offsetTop>=window.innerHeight-img1.offsetHeight){
+						img1.style.top=window.innerHeight-img1.offsetHeight+"px";
+					}
+					break;
+				default:break;
+			}
+		}
+	</script>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>隔3求和</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			//定义两个变量，用于下面计算用到的和以及数量
+			var sum=0;
+			var count=0;
+			//定义0-100的值作为计算基准
+			for (var i=0;i<=100;i++) {
+				//定义j值进行取值
+				for (var j=0;j<=100;j++) {
+					//找规律，基于i的计算对符合要求的j进行判断取值
+					if(j==3*i+1){
+//						console.log(j);
+						//符合条件就输出一个j值
+					    document.write(j+"<br>")
+					    //取值以后和的计算，将计算过的值重新赋值给sum
+						sum=sum+j;
+						//if语句没运行一次表示有一个符合条件的值，此时数量增加1
+						count++;
+//						console.log(sum);
+//						console.log(count);
+					}
+				}			
+			}
+			//当全部循环执行完以后输出计算的和以及个数
+			document.write("这些数的和为"+sum+"，个数为"+count);
+		</script>
+	</body>
+</html>

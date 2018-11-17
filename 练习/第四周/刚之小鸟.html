@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>刚之小鸟飞翔小游戏</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			html,body,.wrap{
+				height: 100%;
+			}
+			body{
+				overflow: hidden;
+			}
+			.wrap{
+				width: 200%;
+				/*height: 100%;*/
+				/*overflow: hidden;*/
+				
+			}
+			.wrap .bgi{
+				width: 100%;
+				height: 100%;
+				position: absolute;
+			}
+			.wrap .cd{
+				position: absolute;
+				width: 100%;
+				bottom: 0;
+				z-index: 1;
+			}
+			.wrap .bird{
+				position: absolute;
+				left: 20px;
+			}
+			.gd{
+				width: 62px;
+				height: 100%;
+				position: absolute;
+				top: 0;
+			}
+			.gd div{
+				width: 100%;
+				position: absolute;
+				-webkit-background-size: 100% auto;
+				background-size: 100% auto;
+			}
+			.gd img{
+				position: absolute;
+			}
+			.gdu{
+				top: 0;
+				background: url(../../img/img/up_mod.png) repeat-y;
+			}
+			.gdd{
+				bottom: 0;
+				background: url(../../img/img/down_mod.png) repeat-y;
+			}
+			.score{
+				position: absolute;
+				top: 0;
+				z-index: 2;
+				text-align: center;
+				width: 100%;
+				font-size: 30px;
+				color: white;
+				font-weight: bold;
+			}
+		</style>
+		<script src="../../js/刚之小鸟.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		
+		<div class="wrap">
+			<div class="score">0</div>
+			<img class="bgi" src="../../img/img/bg.jpg"/><img class="bgi" src="../../img/img/bg.jpg"/>
+			<img class="cd" src="../../img/img/banner.jpg"/><img class="cd" src="../../img/img/banner.jpg"/>
+			<img src="../../img/img/bird0.png" alt="" class="bird" />
+			
+		</div>
+		
+	</body>
+</html>
+

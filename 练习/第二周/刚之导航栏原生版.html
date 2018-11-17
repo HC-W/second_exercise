@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				margin: 0;
+			}
+			
+			.wrap {
+				position: relative;
+				/*width: 400px;
+				margin: 0 auto;*/
+			}
+			
+			.nav {
+				width: 400px;
+				margin: 0 auto;
+				overflow: hidden;
+			}
+			
+			.nav div {
+				width: 100px;
+				padding: 10px 0;
+				background-color: #ccc;
+				text-align: center;
+				cursor: pointer;
+				float: left;
+			}
+			
+			.slider {
+				position: absolute;
+				width: 100px;
+				height: 10px;
+				background-color: red;
+				border-radius: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="wrap">
+			<div class="nav">
+				<div>导航1</div>
+				<div>导航2</div>
+				<div>导航3</div>
+				<div>导航4</div>
+			</div>
+			<div class="slider"></div>
+		</div>
+		<script src="js/超级无敌24k土豪金运动框架.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var myNav = document.querySelector(".nav");
+			var mySlider = document.querySelector(".slider");
+			var myBtns = document.querySelectorAll(".nav div");
+			var index = 0;
+			var speed = 1;
+			var timer = null;
+			/*
+			mySlider.style.left = myNav.offsetLeft + "px";
+			for(var i = 0; i < myBtns.length; i++){
+				myBtns[i].index = i;
+				myBtns[i].onmouseover = function(){
+					//获取方向
+					if(index > this.index){
+						speed = -1;
+					}else if(index < this.index){
+						speed = 1;
+					}
+					//把这一次移动的值赋给index
+					index = this.index;
+					GGAni(mySlider,1,"left",this.offsetLeft,speed,"px",function(){
+//						alert("移动结束");
+					});
+				}
+				
+			}
+			*/
+			
+			//设置初始位置
+			mySlider.style.left = myNav.offsetLeft + "px";
+			for(var i = 0; i < myBtns.length; i++){
+				//保存下标
+				myBtns[i].index = i;
+				//点击事件
+				myBtns[i].onmouseover = function(){
+					//获取方向
+//					if(index > this.index){
+//						speed = -1;
+//					}else if(index < this.index){
+//						speed = 1;
+//					}
+					//把这一次移动的值赋给index
+//					index = this.index;
+
+					//获取终点
+					var endPos = this.offsetLeft;
+					clearInterval(timer);
+					timer = setInterval(function(){
+						//实时判断位置，改变方向
+						if(mySlider.offsetLeft > endPos){
+							speed = -1;
+						}else if(mySlider.offsetLeft < endPos){
+							speed = 1;
+						}
+						//判断终点
+						if(mySlider.offsetLeft == endPos){
+							//停止
+							clearInterval(timer);
+						}else{
+							//动
+							mySlider.style.left = mySlider.offsetLeft + speed + "px";
+						}
+						
+					},1);
+				}
+			}
+			
+		</script>
+	</body>
+
+</html>

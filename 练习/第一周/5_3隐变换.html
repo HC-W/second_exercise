@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>3个透明度切换</title>
+		<style>
+			#wrap div{
+				width: 100px;
+				height: 100px;
+				background-color: red;
+				opacity: 1;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div>1</div>
+			<div>2</div>
+			<div>3</div>
+		</div>
+		
+		<script type="text/javascript">
+			
+			var wr=document.getElementById("wrap");
+			var divv=wr.getElementsByTagName("div");
+			
+			for (var i=0;i<divv.length;i++) {
+				divv[i].style.opacity=1;
+				//自定义属性timer，定时器
+				divv[i].timer = null;
+				divv[i].onmousemove=function(){
+					clearInterval(this.timer);
+					var _this=this;
+					this.timer=setInterval(function(){
+						//判断透明度是否为0
+						if(_this.style.opacity==0){
+							clearInterval(_this.timer);
+						}else{
+							//不为0继续减少
+							_this.style.opacity-=0.01;
+						}
+					},10);
+				}
+				divv[i].onmouseout=function(){
+					clearInterval(this.timer);
+					var _this=this;
+					this.timer=setInterval(function(){
+						if(_this.style.opacity==1){
+							clearInterval(_this.timer);
+						}else{
+							// + 使用有字符串拼接，所以需要将其转换，然后计算再赋值
+							var op=Number(_this.style.opacity);
+							op+=0.01;
+							_this.style.opacity = op;;
+						}
+					},10);
+				}
+			}
+			
+		</script>
+	</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>年的计算</title>
+	</head>
+	<body>
+		<div id="div1"></div>
+		<script type="text/javascript">
+			var myDiv=document.getElementById("div1");
+			
+			
+			
+			getNowTime()
+			var timer=setInterval(function(){
+				getNowTime()
+			},1000);
+			
+			
+			function getNowTime(){
+				//获取本地时间
+				var myDate=new Date();
+				//自定义时间
+				var newDate=new Date(2020,0,1,0,0,0);
+				
+				//从1970年1月1日到myDate一共多少毫秒
+				var chaDate=myDate.getTime();
+//				console.log(chaDate);
+				//2020年距离1970年1月1日有多少毫秒
+				var cha2Date=newDate.getTime();
+//				console.log(cha2Date);
+				var jiDate=cha2Date-chaDate;
+				//计算本地时间到2020年相差的毫秒数
+//				console.log(jiDate);
+				
+				//相差时间换算成一个小数
+				var jisuan=jiDate/1000/60/60/24;
+//				console.log(jisuan);
+				//取整得到相差天数
+				var days=parseInt(jisuan);
+//				console.log(days);
+				//换算数值减去天数，剩余时分秒，乘以24取整得出相差小时数
+				var hours=parseInt((jisuan-days)*24);
+//				console.log(hours);
+				//继续相减，每次想乘都会把数值提升，此时减去整数余下小数继续计算
+				var min=parseInt(((jisuan-days)*24-hours)*60);
+//				console.log(min);
+				//求得秒数
+				var sec=parseInt((((jisuan-days)*24-hours)*60-min)*60);
+//				console.log(sec);
+				
+				myDiv.innerHTML="距离2020年还差"+days+"天"+hours+"时"+min+"分"+sec+"秒";
+			}
+			
+		</script>
+	</body>
+</html>

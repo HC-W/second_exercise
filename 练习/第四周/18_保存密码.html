@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>保存密码</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.wrap{
+				width: 400px;
+				height: 250px;
+				margin: 0 auto;
+				border: 1px solid black;
+			}
+			form{
+				width: 100%;
+				height: 100%;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-around;
+				align-items: center;
+			}
+			.inp{
+				width: 200px;
+				height: 30px;
+			}
+			.ckb{
+				width: 15px;
+				height: 15px;
+			}
+			.sub{
+				width: 60px;
+				height: 30px;
+				background-color: orangered;
+				color: black;
+				font-weight: bold;
+				border: 1px solid orange;
+				border-radius: 8px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<form action="">
+				<div class="us">
+					<span class="p_user">用户名：</span>
+					<input class="inp user" type="text" placeholder="请输入用户名"/>
+				</div>
+				<div class="pd">
+					<span class="p_psd">密&nbsp;码：</span>
+					<input class="inp psd" type="password" placeholder="请输入密码"/>
+				</div>
+				<div class="chance">
+					<input class="ckb" type="checkbox" />
+					<span class="p_save">保存密码</span>
+				</div>
+				<input class="sub" type="submit" value="登录"/>
+			</form>
+		</div>
+		
+		<script type="text/javascript">
+			function q(css){
+				return document.querySelector(css);
+			}
+			//获取元素
+			var wrap=q(".wrap");
+			var user=q(".user");
+			var myPassword=q(".psd");
+			var myCkb=q(".ckb");
+			var sub=q(".sub");
+//			console.log(wrap,user,myPassword,myCkb,sub);
+			//让整个大层居中
+			wrap.style.marginTop=window.innerHeight/2-wrap.clientHeight/2+"px";
+			
+			//按钮点击提交
+			sub.addEventListener("click",function(){
+				if(user.value && myPassword.value){
+					if(myCkb.checked==true){
+						window.localStorage.username=user.value;
+						window.localStorage.psd=myPassword.value;
+						window.localStorage.chk=true;
+					}else if(myCkb.checked==false){
+						window.localStorage.chk=false;
+					}
+				}else{
+					alert("请输入！");
+				}
+			});
+			if(window.localStorage.chk=="true"){
+				user.value=window.localStorage.username;
+				myPassword.value=window.localStorage.psd;
+				myCkb.checked="checked";
+			}
+//			window.localStorage.clear();
+
+		</script>
+	</body>
+</html>

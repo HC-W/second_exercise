@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>铁路运输</title>
+	</head>
+	<body>
+		
+		<script type="text/javascript">
+			var weight=prompt("请输入行李公斤数：");
+			weight=Number(weight);
+			if(isNaN(weight) || weight<0){
+				alert("输入错误！");
+			}else{
+				if(weight>50){
+					var a=weight-50;
+					a=a.toFixed(2);
+					var money=50*0.15+a*(0.15+0.1);
+					money=money.toFixed(2);
+					alert("你的行李"+weight+"公斤，超重"+a+"公斤，应付金额为"+money+"元。");
+				}else{
+					var money=weight*0.15;
+					money=money.toFixed(2);
+					alert("你的行李"+weight+"公斤，应付金额为"+money+"元。");
+				}
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>滑动到底部</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			body{
+				height: 3300px;
+			}
+		</style>
+	</head>
+	<body>
+		<script type="text/javascript">
+			window.onscroll=function(){
+				//纵向偏移
+				var sh=window.pageYOffset;
+				//body的高度
+//				var hb = document.body.clientHeight;
+				//文档高度
+				var ht=document.documentElement.scrollHeight;
+				//页面可见高度
+				var hy=document.documentElement.clientHeight;
+				console.log(sh,ht,hy);
+				//判断条件
+				if(sh==ht-hy){
+					alert("到底了！");
+				}
+			}
+			
+			
+		</script>
+	</body>
+</html>

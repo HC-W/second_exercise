@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>计算器</title>
+	</head>
+	<body>
+		<input type="text" name="" id="txt1" value="" />
+		<select id="sl">
+			<option value="+">加</option>
+			<option value="-">减</option>
+			<option value="*">乘</option>
+			<option value="/">除</option>
+			<option value="%">取余</option>
+		</select>
+		<input type="text" name="" id="txt2" value="" />
+		=
+		<input type="text" name="" id="txt3" value="" />
+		<input type="button" name="btn" id="btn" value="确定" />
+		
+		
+		<script type="text/javascript">
+			var myTxt1=document.getElementById("txt1")
+			var myTxt2=document.getElementById("txt2");
+			var myTxt3=document.getElementById("txt3");
+			var mySelect=document.getElementById("sl");
+			
+			var myButton=document.getElementById("btn");
+			myButton.onclick=function(){
+				var myText1=Number(myTxt1.value);
+				var myText2=Number(myTxt2.value);
+
+				var Value=mySelect.value;
+				console.log(Value);
+				
+				if(isNaN(myText1) || isNaN(myText2)){
+					alert("有误");
+				}else{
+					if (Value=="+") {
+						var V3=myText1+myText2;
+						myTxt3.value=V3;
+					} 
+					else if(Value=="-"){
+						var V3=myText1-myText2;
+						myTxt3.value=V3;
+					}
+					else if(Value=="*"){
+						var V3=myText1*myText2;
+						myTxt3.value=V3;
+					}
+					else if(Value=="/"){
+						var V3=myText1/myText2;
+						myTxt3.value=V3;
+					}
+					else if(Value=="%"){
+						var V3=myText1%myText2;
+						myTxt3.value=V3;
+					}
+					else{
+						alert("请选择！");
+					}
+				}	
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			
+			#wrap {
+				width: 550px;
+				height: 680px;
+				border: 1px solid black;
+				margin: 20px auto;
+			}
+			
+			#div1,
+			#div2,
+			#div3,
+			#div4,
+			#div5 {
+				float: left;
+			}
+			
+			#div1 {
+				margin-left: 20px;
+				margin-top: 40px;
+			}
+			
+			#div1>p {
+				margin-left: 80px;
+				margin-top: 10px;
+			}
+			
+			#div2 {
+				margin-left: 50px;
+				margin-top: 17px;
+			}
+			
+			#div2>p {
+				margin-left: 50px;
+				margin-top: 10px;
+			}
+			
+			#password1 {
+				margin-left: 7px;
+			}
+			
+			#div3 {
+				margin-left: 18px;
+				margin-top: 17px;
+			}
+			
+			#div3>p {
+				margin-left: 80px;
+				margin-top: 10px;
+			}
+			
+			#password2 {
+				margin-left: 7px;
+			}
+			
+			#div4 {
+				margin-left: 2px;
+				margin-top: 17px;
+			}
+			
+			#div4>p {
+				margin-left: 98px;
+				margin-top: 17px;
+			}
+			
+			#yzm {
+				margin-left: 7px;
+			}
+			
+			#div5 {
+				margin-top: 40px;
+				margin-left: 98px;
+				font-size: 12px;
+			}
+			
+			#user {
+				width: 240px;
+				height: 30px;
+				border: 1px solid gray;
+				border-radius: 5px;
+				margin-left: 10px;
+				font-size: 15px;
+				padding-left: 10px;
+			}
+			
+			#password1,
+			#password2,
+			#yzm {
+				width: 403px;
+				height: 30px;
+				border: 1px solid gray;
+				border-radius: 5px;
+				font-size: 15px;
+			}
+			
+			#submit {
+				width: 120px;
+				height: 40px;
+				background-color: green;
+				border-radius: 5px;
+				color: white;
+				font-size: 20px;
+				display: block;
+				margin-top: 30px;
+			}
+			
+			#submit:hover {
+				border: 1px solid black;
+			}
+			
+			p {
+				font-size: 12px;
+				color: grey;
+			}
+			
+			a {
+				text-decoration: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="wrap">
+			<div id="div1">
+				* 邮件地址<input type="text" name="" id="user" value="" placeholder="建议用手机号注册" />@
+				<select name="">
+					<option value="">163.com</option>
+					<option value="">126.com</option>
+					<option value="">yeah.net</option>
+				</select>
+				<p id="p1">6~18个字符，可使用字母、数字、下划线，需以字母开头</p>
+			</div>
+			<div id="div2">
+				* 密码 <input type="password" name="" id="password1" value="" />
+				<p id="p2">6~16个字符，区分大小写</p>
+			</div>
+			<div id="div3">
+				* 确认密码 <input type="password" name="" id="password2" value="" />
+				<p id="p3">请再次输入密码</p>
+			</div>
+			<div id="div4">
+				* 短信验证码 <input type="text" name="yzm" id="yzm" value="" />
+				<p id="p4">请查收手机短信，并填写短信中的验证码</p>
+			</div>
+			<div id="div5">
+				<input type="checkbox" checked="1" name="" id="b" value="" />同意
+				<a href="###">"服务条款"</a>和
+				<a href="###">"隐私权相关政策"</a>
+				<input type="submit" name="" id="submit" value="立即注册" />
+			</div>
+		</div>
+		<script src="../../js/封装函数.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/19_注册.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

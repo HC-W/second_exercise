@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>定时炸弹</title>
+	</head>
+	<body>
+		<div id="div1"></div>
+		<script type="text/javascript">
+			
+			var myDiv=document.getElementById("div1");
+			
+			var i=6;
+			myDiv.innerHTML=i;
+			var timer = setInterval(function(){
+				if(i==0){
+					clearInterval(timer);
+					myDiv.innerHTML="Bull!!!!!!";
+				}else{
+					i=i-1;
+					myDiv.innerHTML=i;
+				}
+			},1000);
+			
+		</script>
+	</body>
+</html>

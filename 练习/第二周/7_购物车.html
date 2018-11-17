@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>购物车</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.wrap{
+				margin-top: 80px;
+				position: absolute;
+			}
+			.box{
+				position: relative;
+				margin-bottom: 10px;
+				text-align: center;
+			}
+			.shang{
+				width: 40px;
+				height: 30px;
+				background-color: #CCCCCC;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			.xia{
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100px;
+				height: 100%;
+				color: white;
+				background-color: red;
+				font-size: 18px;
+				text-align: center;
+				z-index: -1;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="box">
+				<div class="shang">>></div>
+				<div class="xia">购物车</div>
+			</div>
+			<div class="box">
+				<div class="shang">>></div>
+				<div class="xia">我的关注</div>
+			</div>
+			<div class="box">
+				<div class="shang">>></div>
+				<div class="xia">我的足迹</div>
+			</div>
+			<div class="box">
+				<div class="shang">>></div>
+				<div class="xia">我的消息</div>
+			</div>
+			<div class="box">
+				<div class="shang">>></div>
+				<div class="xia">咨询JIMI</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+			//定义获取元素的函数
+			function select(css){
+				return document.querySelectorAll(css);
+			}
+			//获取元素
+			var myBox=select(".box");
+			var myShang=select(".shang");
+			var myXia=select(".xia");
+			console.log(myBox,myShang,myXia);
+			//定义一个速度，全局变量
+			var speed=1;
+			for (var i=0 ; i<myBox.length ; i++) {
+				//给下层需要隐藏的div设置初始左边定位，让它隐藏
+				myXia[i].style.left=myShang[i].offsetWidth - myXia[i].offsetWidth + "px";
+				//每一个下标对应元素的定时器都为空
+				myBox[i].timer=null;
+				//提取下标
+				myBox[i].index=i;
+				//鼠标移入事件
+				myBox[i].onmousemove=function(){
+					//因为下文有定时器，其中无法提取到i，所以此时需要单独把this保存下来
+					var _this=this;
+					//每次运行都要先清除上次的定时器，不然会出现抖动的bug
+					clearInterval(this.timer);
+					//方法1：在点击事件内部直接进行定时器的使用
+					//定时器
+//					this.timer=setInterval(function(){
+//						if (myXia[_this.index].offsetLeft==myShang[_this.index].offsetWidth) {
+//							//满足条件，清除定时器
+//							clearInterval(_this.timer);
+//						} else{
+//							//不然向趋近于满足条件的一方进行
+//							myXia[_this.index].style.left=myXia[_this.index].offsetLeft+speed+"px";
+//						}
+//					},1);
+
+					//方法2：使用函数封装与调用
+					var endpos=myShang[_this.index].offsetWidth;
+					motion(this,endpos,speed);
+				}
+				//鼠标移出事件
+				myBox[i].onmouseout=function(){
+					var _this=this;
+					clearInterval(this.timer);
+//					this.timer=setInterval(function(){
+//						//判断基于定位的左边位置，如果等于初始值，或者说隐进去看不见了，此时停止移动
+//						if (myXia[_this.index].offsetLeft==myShang[_this.index].offsetWidth - myXia[_this.index].offsetWidth) {
+//							//满足条件，清除定时器
+//							clearInterval(_this.timer);
+//						} else{
+//							//不然向趋近于满足条件的一方进行
+//							myXia[_this.index].style.left=myXia[_this.index].offsetLeft-speed+"px";
+//						}
+//					},1);
+					//方法2：使用函数封装与调用
+					var endpos=myShang[_this.index].offsetWidth - myXia[_this.index].offsetWidth;
+					motion(this,endpos,-speed);
+				}
+			}
+			
+			
+			//方法2：函数封装与调用
+			//函数封装：将相同部位写在一起进行调用，其中不同的地方使用封装参数在调用时单独赋值
+			function motion(t,pos,m_speed){
+				t.timer=setInterval(function(){
+					if (myXia[t.index].offsetLeft==pos) {
+						//满足条件，清除定时器
+						clearInterval(t.timer);
+					} else{
+						//不满足则向趋近于满足条件的一方进行
+						myXia[t.index].style.left=myXia[t.index].offsetLeft+m_speed+"px";
+					}
+				},1);
+			}
+		</script>
+	</body>
+</html>

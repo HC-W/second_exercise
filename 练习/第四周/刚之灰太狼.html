@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<title>Document</title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			html {
+				font-size: 10px;
+			}
+			body,
+			html {
+				height: 100%;
+			}
+			.all {
+				height: 100%;
+				background: url(img/game_bg.jpg) 0 0 no-repeat;
+				-webkit-background-size: 100% 100%;
+				background-size: 100% 100%;
+			}
+			.scoreFa {
+				position: absolute;
+				/*80px*/
+				left: 19.32367%;
+				/*23px*/
+				top: 3.125%;
+				color: white;
+				font-size: 2.5rem;
+			}
+			.start {
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: translate(-50%, -50%);
+				background-color: red;
+				color: white;
+				font-size: 30px;
+				padding: 10px;
+				z-index: 99;
+				/*opacity: 0;*/
+			}
+			.timeFa {
+				/*234px*/
+				width: 56.52173%;
+				/*25px*/
+				height: 3.39673%;
+				border-radius: 10px;
+				position: absolute;
+				/*101px*/
+				top: 13.72282%;
+				/*80px*/
+				left: 19.32367%;
+				overflow: hidden;
+			}
+			.timeFa .time {
+				display: inline-block;
+				width: 100%;
+				height: 100%;
+				background-color: red;
+			}
+			.all img {
+				position: absolute;
+				/*width: 108px;
+			height: 101px;*/
+			}
+			.all img:nth-child(1) {
+				top: 39.48913%;
+				left: 7.66183%;
+			}
+			.all img:nth-child(2) {
+				top: 29.57065%;
+				left: 32.7826%;
+			}
+			.all img:nth-child(3) {
+				top: 35.68478%;
+				left: 60.80193%;
+			}
+			.all img:nth-child(4) {
+				top: 51.98913%;
+				left: 7.17874%;
+			}
+			.all img:nth-child(5) {
+				top: 45.875%;
+				left: 34.23188%;
+			}
+			.all img:nth-child(6) {
+				top: 50.08695%;
+				left: 64.42512%;
+			}
+			.all img:nth-child(7) {
+				top: 66.93478%;
+				left: 11.28502%;
+			}
+			.all img:nth-child(8) {
+				top: 62.85869%;
+				left: 39.54589%;
+			}
+			.all img:nth-child(9) {
+				top: 67.47826%;
+				left: 67.08212%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="timeFa"><span class="time" id="time"></span></div>
+		<div class="scoreFa" id="score">0</div>
+		<div class="start" id="start">start game</div>
+		<div class="all">
+			<img src="" alt="" />
+			<img src="" alt="" />
+			<img src="" alt="" />
+			<img src="" alt="" />
+			<img src="" alt="" />
+			<img src="" alt="" />
+			<img src="" alt="" />
+			<img src="" alt="" />
+			<img src="" alt="" />
+		</div>
+		<script type="text/javascript">
+			//获取元素
+			var gameTime = document.querySelector(".time");
+			var gameScore = document.querySelector(".scoreFa");
+			var startBtn = document.querySelector(".start");
+			var kengs = document.querySelectorAll(".all img");
+			//控制游戏的定时器
+			var gameTimer = null;
+			//倒计时定时器
+			var DJSTimer = null;
+			//游戏得分
+			var myScore = 0;
+			//狼数组
+			var langs = ["h","h","h","h","x"];
+			
+			//狼上来
+			function langUp (){
+				//随机一个坑
+				var randKeng = kengs[rand(0,kengs.length-1)];
+				//判断随机到的坑，里面是否已经有狼
+				if(randKeng.getAttribute("src")){
+					return;
+				}
+				//随机一个狼
+				var randLang = langs[rand(0,langs.length-1)]
+				//把随机到的狼，存到坑的自定义属性里
+				randKeng.lang = randLang;
+				//给每个坑出狼的时候，定义一个可以点击的bool
+				randKeng.isClick = true;
+				//为了替换显示图片
+				randKeng.index = 0;
+				randKeng.timer = setInterval(function(){
+					if(randKeng.index == 6){
+						clearInterval(randKeng.timer);
+						//狼下去
+						langDown(randLang,randKeng);
+					}else{
+						randKeng.src = "img/"+ randLang + randKeng.index + ".png";
+						randKeng.index++;
+					}
+				},100);
+			}
+			
+			//狼下去
+			function langDown(who,where){
+				//从5开始
+				where.index = 5;
+				
+				where.timer = setInterval(function(){
+					if(where.index == -1){
+						clearInterval(where.timer);
+						//清除图片
+						where.src = "";
+					}else{
+						where.src = "img/" + who + where.index + ".png";
+						where.index--;
+					}
+				},100);
+			}
+			
+			//自动出狼
+			function autoRand(){
+				gameTimer = setInterval(function(){
+					langUp();
+				},200);
+			}
+			
+			//打到狼
+			function hitLang(who,where){
+				clearInterval(where.timer);
+				//图片从6开始向上加（眩晕）
+				where.index = 6;
+				where.timer = setInterval(function(){
+					if(where.index == 10){
+						clearInterval(where.timer);
+						//清除图片（狼消失）
+						where.src = "";
+					}else{
+						where.src = "img/" + who + where.index + ".png";
+						where.index ++;
+					}
+				},50);
+			}
+			
+			//倒计时
+			function daojishi(){
+				DJSTimer = setInterval(function(){
+					if(gameTime.offsetWidth <= 0){
+						//如果时间小于0,让其宽度等于0
+						gameTime.style.width = "0px";
+						clearInterval(DJSTimer);
+						//游戏结束
+						gameOver();
+					}else{
+						gameTime.style.width = gameTime.offsetWidth - 1 + "px";
+					}
+				},100);
+			}
+			
+			//游戏结束
+			function gameOver(){
+				//清除自动出狼的定时器
+				clearInterval(gameTimer);
+				//弹出游戏结束和得分
+				alert("gameover，your scroe 是");
+				for(var i = 0; i < kengs.length; i++){
+					//让所有的坑的点击事件失效
+					kengs[i].onclick = function(){
+						return false;
+					}
+				}
+			}
+			
+			//计算分数
+			function jisuanScore(who){
+				//判断打到小灰灰还是灰太狼
+				switch(who){
+					case "h":
+						myScore += 10;
+						break;
+					case "x":
+						myScore -= 10;
+						break;
+					default:
+				}
+				//显示得分
+				gameScore.innerHTML = myScore;
+			}
+			
+			//当点击开始游戏
+			startBtn.onclick = function(){
+				autoRand();
+				//倒计时
+				daojishi();
+				//字消失
+				this.style.display = "none";
+			}
+			
+			//给坑加点击事件
+			for(var i = 0; i < kengs.length; i++){
+				kengs[i].onclick = function(){
+					// 判断只能点击一次
+					if(this.isClick){
+						//打到狼的动画
+						hitLang(this.lang,this);
+						//加分减分
+						jisuanScore(this.lang);
+						//点击一次之后，把isClick变为false
+						this.isClick = false;
+					}
+				}
+			}
+			
+			
+			//随机函数	
+			function rand(min,max){
+				return Math.floor(Math.random()*(max+1-min)+min);
+			}
+			
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+

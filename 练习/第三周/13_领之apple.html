@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			body{
+				padding:0 10px;
+				background-color: #f2f2f2;
+			}
+			.wrap{
+				border-bottom: 1px solid #ccc;
+				padding-right: 5px;
+			}
+			.title{
+				overflow: hidden;
+				padding: 5px 0;
+				cursor: pointer;
+				color: #555;
+			}
+			.title:hover{
+				color:#333;
+			}
+			.left{
+				float: left;
+				font-size: 12px;
+			}
+			.right{
+				float: right;
+				width: 20px;
+				height: 20px;
+				text-align: center;
+				line-height: 17px;
+			}
+			.list{
+				position: relative;
+				overflow: hidden;
+			}
+			.list div{
+				position: relative;
+				top: -50px;
+				padding-left: 20px;
+			}
+			.list a{
+				display: block;
+				text-decoration: none;
+				color: #555;
+				font-size: 12px;
+				margin-bottom: 10px;
+			}
+			.list a:hover{
+				text-decoration: underline;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="title">
+				<div class="left">选购及了解</div>
+				<div class="right">+</div>
+			</div>
+			<div class="list">
+				<!--<div></div>-->
+			</div>
+		</div>
+		<script type="text/javascript">
+			
+			var myList = document.querySelector(".list");
+			var myTitle = document.querySelector(".title");
+			var myRight = document.querySelector(".right");
+			
+			//移动定时器
+			var timer = null;
+			var timer2 = null;
+			//速度
+			var speed = 1;
+			var innerArr = ["Mac","iPad","iPhone","Watch","Music","iTunes","iPod touch","配件","App Store充值卡"];
+			//判断是否出来回去
+			var isShow = true;
+			myTitle.onclick = function(){
+				if(isShow){
+					//生成a的父级
+					var newDiv = document.createElement("div");
+					//生成A
+					for(var i = 0; i < 9; i++){
+						var newA = document.createElement("a");
+						newA.href = "###";
+						newA.innerHTML = innerArr[i];
+						//把a放进newDiv里
+						newDiv.appendChild(newA);
+					}
+					//把newDiv放进list里
+					myList.appendChild(newDiv);
+					console.log(newDiv.offsetTop);
+					//移动
+					clearInterval(timer);
+					timer = setInterval(function(){
+						//判断
+						if(newDiv.offsetTop == 0){
+							//停止
+							clearInterval(timer);
+						}else{
+							//移动
+							newDiv.style.top = newDiv.offsetTop + speed + "px";
+						}
+					},1);
+					//旋转
+					rot(0,-45,-1);
+//					myRight.style.transform = "rotate(-45deg)";
+				}else{
+//					newDiv.remove();
+//					myList.firstElementChild.remove();
+					myList.removeChild(myList.firstElementChild);
+					//旋转
+					rot(-45,0,1);
+//					myRight.style.transform = "rotate(0deg)";
+				}
+				//改变状态
+				isShow = !isShow;
+			}
+			
+			//获取非行间样式
+			function getCss(who,css){
+				return parseFloat(getComputedStyle(who)[css]);
+			}
+			
+			//旋转
+			function rot(startPos,endPos,speed){
+				
+				clearInterval(timer2);
+				timer2 = setInterval(function(){
+					//判断旋转到终点
+					if(startPos == endPos){
+						clearInterval(timer2);
+					}else{
+						//向终点移动
+						startPos+=speed;
+						myRight.style.transform = "rotate("+startPos+"deg)";
+					}
+				},1);
+			}
+		</script>
+	</body>
+</html>

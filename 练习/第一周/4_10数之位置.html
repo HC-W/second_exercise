@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>10个数数组</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			//定义数组，长度为10
+			var arr=new Array(10);
+			for(var i=0;i<arr.length;i++){
+				//定义随机数的范围为1-100
+				arr[i]=Math.floor(Math.random()*100+1);
+			}
+			document.write("数组为："+arr+"<br>");
+			var max=Math.max.apply(null,arr);
+			var min=Math.min.apply(null,arr);
+			var wa=arr.indexOf(max);
+			var wi=arr.indexOf(min);
+			document.write("最大值："+max+",在数组中位置："+wa+"<br>");
+			document.write("最小值："+min+",在数组中位置："+wi);
+		</script>
+	</body>
+</html>

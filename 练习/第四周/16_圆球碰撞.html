@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>圆球碰撞</title>
+		<style type="text/css">
+			.wrap{
+				width: 800px;
+				height: 500px;
+				border: 1px solid black;
+				position: relative;
+			}
+			.big{
+				width: 100px;
+				height: 100px;
+				background-color: orangered;
+				border-radius: 50%;
+				position: absolute;
+				top: 200px;
+				left: 400px;
+				-webkit-user-select: none;
+			}
+			.small{
+				width: 50px;
+				height: 50px;
+				background-color: cornflowerblue;
+				border-radius: 50%;
+				position: absolute;
+				-webkit-user-select: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="big"></div>
+			<div class="small"></div>
+		</div>
+		
+		<script type="text/javascript">
+			//获取元素
+			var wrap=document.querySelector(".wrap");
+			var big=document.querySelector(".big");
+			var small=document.querySelector(".small");
+			
+			//鼠标按下事件
+			small.onmousedown=function(ev){
+				//事件对象
+				var e=ev || window.event;
+				//鼠标点击位置
+				var mouseX=e.clientX;
+				var mouseY=e.clientY;
+				
+				//小的div的位置
+				var divX=small.offsetLeft;
+				var divY=small.offsetTop;
+				
+				//移动事件
+				document.onmousemove=function(ev){
+					var e=ev ||　window.event;
+					var nowX=e.clientX;
+					var nowY=e.clientY;
+					//差值
+					var chaX=nowX-mouseX;
+					var chaY=nowY-mouseY;
+					//最终位置
+					var endposX=chaX+divX;
+					var endposY=chaY+divY;
+					//判断边界
+					if(endposX<0){
+						endposX=0;
+					}else if(endposX>wrap.clientWidth-small.offsetWidth){
+						endposX=wrap.clientWidth-small.offsetWidth;
+					}
+					if(endposY<0){
+						endposY=0;
+					}else if(endposY>wrap.clientHeight-small.offsetHeight){
+						endposY=wrap.clientHeight-small.offsetHeight;
+					}
+					
+					small.style.left=endposX+"px";
+					small.style.top=endposY+"px";
+					
+					//碰撞检测
+					var smallyuanX=small.offsetLeft+small.offsetWidth/2;
+					var smallyuanY=small.offsetTop+small.offsetHeight/2;
+					
+					var bigyuanX=big.offsetLeft+big.offsetWidth/2;
+					var bigyuanY=big.offsetTop+big.offsetHeight/2;
+//					console.log(bigyuanX,bigyuanX);
+					
+					var yuanchaX=Math.abs(smallyuanX-bigyuanX);
+					var yuanchaY=Math.abs(smallyuanY-bigyuanY);
+					var yuanchaZ=Math.sqrt(Math.pow(yuanchaX,2)+Math.pow(yuanchaY,2));
+//					console.log(yuanchaZ);
+					if(yuanchaZ<=small.offsetWidth/2+(big.offsetWidth/2)){
+						big.style.backgroundColor="black";
+					}
+					else{
+						big.style.backgroundColor="";
+					}
+				}
+			}
+			document.onmouseup=function(){
+				document.onmousemove=false;
+			}
+		</script>
+	</body>
+</html>

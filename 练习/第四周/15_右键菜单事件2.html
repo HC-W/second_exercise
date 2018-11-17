@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>右键菜单事件2</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.wrap{
+				width: 100px;
+				position: absolute;
+			}
+			.u{
+				border: 1px solid #ccc;
+				text-align: center;
+				list-style: none;
+			}
+			.u .l{
+				line-height: 1.5em;
+				border-bottom: 1px solid #CCCCCC;
+				position: relative;
+				cursor: auto;
+			}
+			.u .l ul{
+				width: 100px;
+				position: absolute;
+				top: 0;
+				right: -100px;
+				border: 1px solid #ccc;
+				text-align: center;
+				list-style: none;
+			}
+			.u li>ul>li{
+				line-height: 1.5em;
+				border-bottom: 1px solid #CCCCCC;
+				position: relative;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap"></div>
+		
+		<script type="text/javascript">
+			var wrap=document.querySelector(".wrap");
+			//获取浏览器页面的宽高
+			var winW=window.innerWidth;
+			var winH=window.innerHeight;
+			var wrapW;
+			var wrapH;
+//			console.log(wrapW,wrapH);
+			//右键点击事件
+			document.oncontextmenu=function(ev){
+				var e=ev || window.event;
+				//清除上次生成的列表
+				remove(wrap);
+				//获取鼠标位置
+				var mouseX=e.clientX;
+				var mouseY=e.clientY;
+				//子级的个数
+				var count=6;
+				//创建菜单
+				var u=document.createElement("ul");
+				u.setAttribute("class","u");
+				wrap.appendChild(u);
+				//列表子级
+				for (var i=0;i<count;i++) {
+					var l=document.createElement("li");
+					l.innerHTML="菜单"+i;
+					l.setAttribute("class","l");
+					u.appendChild(l);
+					l.index=i;
+					l.onmouseenter=function(){
+						this.style.backgroundColor="red";
+						child(this,5,l)
+					}
+					l.onmouseleave=function(){
+						this.style.backgroundColor="";
+						remove(this);
+					}
+				}
+				
+				//获取wrap的宽高
+				wrapW=wrap.offsetWidth;
+				wrapH=wrap.offsetHeight;
+				//边界情况的判断
+//				if(mouseX>winW-wrapW && mouseY>winH-wrapH){
+//					wrap.style.left=winW-wrapW+"px";
+//					wrap.style.top=winH-wrapH+"px";
+//				}else if(mouseX>winW-wrapW){
+//					wrap.style.left=winW-wrapW+"px";
+//					wrap.style.top=mouseY+"px";
+//				}else if(mouseY>winH-wrapH){
+//					wrap.style.top=winH-wrapH+"px";
+//					wrap.style.left=mouseX+"px";
+//				}else{
+//					//属性的赋值变化
+//					wrap.style.left=mouseX+"px";
+//					wrap.style.top=mouseY+"px";
+//				}
+
+				if(mouseX>winW-wrapW){
+					var end=winW-wrapW;
+				}else{
+					var end=mouseX;
+				}
+				if(mouseY>winH-wrapH){
+					var endY=winH-wrapH;
+				}else{
+					var endY=mouseY;
+				}
+				wrap.style.left=end+"px";
+				wrap.style.top=endY+"px";
+				
+				
+				//清除默认菜单框
+				e.preventDefault();
+			}
+			
+//			console.log(wrap);
+			//页面点击清除事件
+			document.onclick=function(){
+				remove(wrap);
+			}
+			//清除子级函数
+			function remove(who){
+				//判断是否有子元素子级
+				if(who.firstElementChild){
+					//有的话进行删除
+					who.removeChild(who.firstElementChild);
+				}
+			}
+			
+			//生成子级的函数
+			function child(who,num,l){
+				var u2=document.createElement("ul");
+				who.appendChild(u2);
+				//列表子级
+				for (var i=0;i<num;i++) {
+					var l2=document.createElement("li");
+					l2.innerHTML="菜单"+i;
+					u2.appendChild(l2);
+					l2.onmouseover=function(){
+						this.style.backgroundColor="red";	
+					}
+					l2.onmouseout=function(){
+						this.style.backgroundColor="";	
+					}
+				}
+				
+				if(wrap.offsetLeft+wrapW+u2.offsetWidth>winW){
+					var endpos=-wrapW;
+				}else{
+					var endpos=wrapW;
+				}
+//				console.log(_this.offsetTop);
+				if(wrap.offsetTop+l.index*l.offsetHeight+u2.offsetHeight>winH){
+					var endposY=-(num-1)*l.offsetHeight;
+				}else{
+					var endposY=0;
+				}
+				u2.style.top=endposY+"px";
+				u2.style.left=endpos+"px";
+			}
+		</script>
+	</body>
+</html>

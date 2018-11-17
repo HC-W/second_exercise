@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>电子表</title>
+	</head>
+	<body>
+		<div id="div1"></div>
+		<script type="text/javascript">
+			var myDiv=document.getElementById("div1");
+			
+			getNowTime()
+			var timer=setInterval(function(){
+				getNowTime()
+			},1000);
+			
+			function getNowTime(){
+				var myDate=new Date();
+				var myYear=myDate.getFullYear();
+				var myMon=myDate.getMonth()+1;
+				var myDay=myDate.getDate();
+				var myWeed=myDate.getDay();
+				var myHour=myDate.getHours();
+				var myMin=myDate.getMinutes();
+				var mySec=myDate.getSeconds();
+				myDiv.innerHTML=myYear+"年" +myMon+"月" +myDay+"日" +"星期"+myWeed+"<br>"+getZero(myHour)+":" +getZero(myMin)+":" +getZero(mySec);
+			}
+			
+			function getZero(num){
+				if(num<10){
+					return "0"+num;
+				}else{
+					return num;
+				}
+			}
+		</script>
+	</body>
+</html>

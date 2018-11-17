@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var texts = ["红","黄","蓝","绿","黑"];
+				var colors = ["rgb(255, 0, 0)","rgb(255, 255, 0)","rgb(0, 0, 255)","rgb(0, 128, 0)","rgb(0, 0, 0)"];
+				randBig();
+				randSmall();
+
+				
+				//随机大字文字和颜色
+				function randBig(){
+					$(".bigText").css("color",colors[rand(0,colors.length-1)]).html(texts[rand(0,texts.length-1)]);
+				}
+				
+				//随机小字
+				function randSmall(){
+					var randColor = noRepeat();
+					var randText = noRepeat();
+					//赋值
+					$(".smallText span").each(function(){
+						$(this).css("color",colors[randColor[$(this).index()]])
+						.html(texts[randText[$(this).index()]]);
+					});
+				}
+				//去除重复
+				function noRepeat(){
+					var arr = [];
+					//随机数字，放进数组
+					while(arr.length < $(".smallText span").length){
+						var randNum = rand(0,$(".smallText span").length-1);
+						if(arr.indexOf(randNum) == -1){
+							arr.push(randNum);
+						}
+					}
+					return arr;
+				}
+				//点击事件
+				$(".smallText span").on("click",function(){
+					//当前点击小字内容 === 当前大字的文字颜色
+					if(texts.indexOf($(this).html()) == colors.indexOf($(".bigText").css("color"))){
+						//对了
+						alert("答对了加一分");
+						randBig();
+						randSmall();
+					}else{
+						//错了
+						alert("游戏结束");
+						//移除事件监听
+						$(".smallText span").off("click");
+					}
+				})
+				
+				
+				
+				//随机函数
+				function rand(min,max){
+					return Math.floor(Math.random()*(max+1-min)+min);
+				}
+				
+				
+			})
+			
+			
+			
+			
+		</script>
+		<style type="text/css">
+			.wrap{
+				width: 300px;
+				margin: 0 auto;
+				border: 1px solid red;
+				position: relative;
+			}
+			.time{
+				position: absolute;
+				left: 0;
+				font-size: 30px;
+			}
+			.score{
+				position: absolute;
+				right: 0;
+				font-size: 30px;
+			}
+			.bigText{
+				margin-top: 50px;
+				font-size: 150px;
+				text-align: center;
+			}
+			.rule{
+				font-size: 30px;
+				text-align: center;
+			}
+			.smallText{
+				text-align: center;
+				margin-top: 20px;
+			}
+			.smallText span{
+				font-size: 50px;
+				margin:0 2px;
+				user-select: none;
+				cursor: pointer;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<span class="time">时间:10</span>
+			<span class="score">分数:0</span>
+			<div class="bigText">哈</div>
+			<div class="rule">根据上面的字的颜色，从下面选择正确的字</div>
+			<div class="smallText">
+				<span>哈</span>
+				<span>哈</span>
+				<span>哈</span>
+				<span>哈</span>
+				<span>哈</span>
+			</div>
+		</div>
+	</body>
+</html>
+

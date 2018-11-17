@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>无间断重复二</title>
+		<style type="text/css">
+			.screen{
+				width: 800px;
+				position: relative;
+				border: 1px solid red;
+				margin: 0 auto;
+				overflow: hidden;
+			}
+			.screen img{
+				width: 500px;
+				position: absolute;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="screen">
+				<img src="../../img/1.jpg" alt="" />
+				<img src="../../img/2.jpg" alt="" />
+				<img src="../../img/3.jpg" alt="" />
+			</div>
+		</div>
+	</body>
+	
+	<script type="text/javascript">
+		window.onload=function(){
+			var scr=document.querySelector(".screen");
+			var imgs=document.querySelectorAll(".screen img");
+			
+			var timer=null;
+			var speed=1;
+			//定义大层的高度与图片高度相同
+			scr.style.height=imgs[0].offsetHeight+"px";
+			//定义每个图片的位置
+			for (var i=0;i<imgs.length;i++) {
+				imgs[i].style.left=i*imgs[i].offsetWidth+"px";
+			}
+			
+			
+		}
+	</script>
+</html>

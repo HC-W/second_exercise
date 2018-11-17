@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>jQ之选字小游戏</title>
+		<style type="text/css">
+			*{
+				margin:0;
+			}
+			.wrap{
+				width: 300px;
+				margin: 0 auto;
+				border: 1px solid red;
+				position: relative;
+			}
+			.time,.score{
+				position: absolute;
+				top: 0;
+				font-size: 25px;
+			}
+			.time{
+				left: 0;
+			}
+			.score{
+				right: 0;
+			}
+			.bigText{
+				margin-top: 30px;
+				font-size: 150px;
+				text-align: center;
+			}
+			.rule{
+				font-size: 28px;
+				text-align: center;
+			}
+			.smallText {
+				text-align: center;
+				margin-top: 20px;
+			}
+			.smallText span{
+				font-size: 44px;
+				margin: 0 5px;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<span class="time">时间：0</span>
+			<span class="score">分数：0</span>
+			<p class="bigText">哈</p>
+			<p class="rule">根据上面字的颜色，从下面选择正确的字</p>
+			<div class="smallText">
+				<span>哈</span>
+				<span>哈</span>
+				<span>哈</span>
+				<span>哈</span>
+				<span>哈</span>
+			</div>
+		</div>
+		<script src="../../js/封装函数.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/jq/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+//			var colorArr = ["red","green","blue","yellow","black"];
+			var textArr = ["红","绿","蓝","黄","黑"];
+			var colorArr=["rgb(255, 0, 0)","rgb(0, 128, 0)","rgb(0, 0, 255)","rgb(255, 255, 0)","rgb(0, 0, 0)"]
+			bigTxt();
+			smallTxt();
+			//点击事件
+			$(".smallText span").on("click",function(){
+				if(colorArr.indexOf($(".bigText").css("color"))==textArr.indexOf($(this).html())){
+					bigTxt();
+					smallTxt();
+				}else{
+					//移除事件监听
+					$(".smallText span").off("click");
+				}
+			})
+			//随机大字和颜色
+			function bigTxt(){
+				//大字的字和颜色
+				$(".bigText").html(textArr[rand(0,textArr.length-1)]);
+				$(".bigText").css("color",colorArr[rand(0,colorArr.length-1)]);
+			}
+			//随机小字和颜色
+			function smallTxt(){
+				//定义两个空数组，用来装随机到的文字和颜色
+				var randColorArr = [];
+				var randTextArr = [];
+				for (var i=0;i<$(".smallText span").length;i++) {
+					$(".smallText span").eq(i).html(randTextArr[i]);
+					$(".smallText span").eq(i).css("color",randColorArr[i]);
+				}
+			}
+			
+			//去重
+			function noRepeat(){
+				var arr=[];
+				while(randTextArr.length < 5){
+					//随机一个文字
+					var randSmallText = rand(0,4);
+					//判断是否数组中已经存在该文字
+					if(arr.indexOf(randSmallText) == -1){
+						//如果不存在，就放进去
+						arr.push(randSmallText);
+					}
+				}
+				return arr;
+			}
+		</script>
+	</body>
+</html>

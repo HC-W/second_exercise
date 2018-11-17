@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<p></p>
+		<script src="../../js/jq/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var $para = $("p");
+			$para.prop("luggageCode", 1234);
+			$para.append("The secret luggage code is: ", String($para.prop("luggageCode")), ". ");
+			$para.removeProp("luggageCode");
+			$para.append("Now the secret luggage code is: ", String($para.prop("luggageCode")), ". ");
+		</script>
+	</body>
+</html>

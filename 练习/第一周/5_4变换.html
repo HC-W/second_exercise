@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>4个div的颜色变换</title>
+		<style>
+			#wrap div{
+				display: inline-block;
+				width: 100px;
+				height: 100px;
+				background-color: yellow;
+				margin-right: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div class="div1">1</div>
+			<div class="div2">2</div>
+			<div class="div3">3</div>
+			<div class="div4">4</div>
+		</div>
+		
+		<script type="text/javascript">
+			var myWrap=document.getElementById("wrap");
+			var myDiv=myWrap.getElementsByTagName("div");
+			for (var i=0;i<myDiv.length;i++) {
+				//点击事件
+				myDiv[i].onclick=function(){
+					//把所有的块都变红，点哪个哪个变色
+					for (var j=0;j<myDiv.length;j++) {
+						myDiv[j].style.backgroundColor="red";	
+					}
+					this.style.backgroundColor="blue";
+				}
+			}
+		</script>
+	</body>
+</html>

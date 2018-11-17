@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>小球连接</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.dive{
+				position: absolute;
+				width: 20px;
+				height: 20px;
+				border-radius: 50%;
+			}
+		</style>
+	</head>
+	<body>
+		<script type="text/javascript">
+			//小球个数
+			var count=40;
+			//个数遍历，进行添加
+			for (var i=0;i<count;i++) {
+				var newDiv=document.createElement("div");
+				newDiv.setAttribute("class","dive");
+				//随机颜色的赋值
+				var a=rand(125,245);
+				var b=rand(125,245);
+				var c=rand(125,245);
+				newDiv.style.backgroundColor="rgb("+a+","+b+","+c+")";
+//				newDiv.innerHTML=i;
+				//添加进页面
+				document.body.insertBefore(newDiv,document.body.firstElementChild);
+			}
+			//获取添加进去的div为数组
+			var divs=document.querySelectorAll(".dive");
+			document.onmousedown=function(){
+				document.onmousemove=function(ev){
+					var e=ev || window.event;
+					//鼠标在页面移动的实时坐标
+					var nowX=e.clientX;
+					var nowY=e.clientY;
+					//遍历，位置的定位
+					//一个跟一个
+					for(var k=divs.length-1;k>0;k--){
+						divs[k].style.left=divs[k-1].style.left;
+						divs[k].style.top=divs[k-1].style.top;
+					}
+					//领头小球的坐标就是鼠标移动的坐标
+					divs[0].style.left=nowX+"px";
+					divs[0].style.top=nowY+"px";
+				}
+			}
+			//随机函数
+			function rand(min,max){
+				return Math.floor(Math.random()*(max+1-min)+min);
+			}
+			//鼠标松开停止事件
+			document.onmouseup=function(){
+				document.onmousemove=false;
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>7个随机数</title>
+	</head>
+	<body>
+		<input type="button" name="btn" id="btn" value="刷新" />
+		<div id="div1"></div>
+		<script type="text/javascript">
+			var myBtn=document.getElementById("btn");
+			var myDiv=document.getElementById("div1");
+			myBtn.onclick=function(){
+				var res="";
+				//给一个范围为7的循环，使其输出7个随机数
+				for (var i=0;i<7;i++) {
+//					console.log(i);
+					//输出随机数
+					var a=Math.floor(Math.random()*35+1);
+//					console.log(a);
+//					myDiv.innerHTML += a+" ";
+					res += a+" ";
+				}
+				myDiv.innerHTML = res;
+			}
+		</script>
+	</body>
+</html>

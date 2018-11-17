@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>歌手打分</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			//定义总分数为0
+			var sum=0;
+			//定义一个数组，长度为8
+			var arr=new Array(10);
+			//使用for循环输出8个学生的随机成绩
+			for (var i=0;i<10;i++) {
+				//评委打分随机数0-10
+				var grade=Math.floor(Math.random()*(10+1));
+				var e=i+1;
+				document.write("第"+e+"位评委的打分为："+grade+"<br>");
+				//每输出一个成绩总成绩相加后仍返回值给sum
+				sum+=grade;
+				//把一次输出的10个随机成绩添加到数组中
+				arr.splice(i,1,grade);
+			}
+			//使用冒泡排序将数组进行排序
+			for(var j=0;j<arr.length-1;j++){
+				for(var k=0;k<arr.length-1-j;k++){
+					if(arr[k]>arr[k+1]){
+						var temp=arr[k];
+						arr[k]=arr[k+1];
+						arr[k+1]=temp;
+					}
+				}
+			}
+			console.log(arr);
+			var Max=arr[arr.length-1];
+			var Min=arr[0];
+			sum=sum-Max-Min;
+			//去除最大值
+			arr.pop();
+			//去除最小值
+			arr.shift();
+			console.log(arr);
+			//求得剩余数值的平均数
+			var fen=sum / arr.length;
+			document.write("去除最高分："+Max+"<br>");
+			document.write("去除最低分："+Min+"<br>");
+			document.write("最终得分："+fen);
+		</script>
+	</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>div赋值</title>
+		<style type="text/css">
+			#div1{
+				width: 0;
+				height: 0;
+				background-color: green;
+				transition: all 1s;
+			}
+		</style>
+	</head>
+	<body>
+		宽：<input type="text" name="" id="wd" value="" />
+		高：<input type="text" name="" id="hg" value="" />
+		颜色：<input type="text" name="" id="bc" value="" />
+		<input type="button" name="" id="btn" value="确定" />
+		<div id="div1"></div>
+		
+		<script type="text/javascript">
+			var myButton=document.getElementById("btn");
+			var myDiv=document.getElementById("div1");
+			myButton.onclick=function(){
+				var myWidth=document.getElementById("wd").value;
+				console.log(myWidth);
+				var myHeight=document.getElementById("hg").value;
+				var myBgColor=document.getElementById("bc").value;
+				myDiv.style.width=myWidth+"px";
+				console.log(myDiv.style.width);
+				myDiv.style.height=myHeight+"px";
+				myDiv.style.backgroundColor=myBgColor;
+			}
+		</script>
+	</body>
+</html>

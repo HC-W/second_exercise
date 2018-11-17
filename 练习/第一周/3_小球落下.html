@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>小球落下弹跳</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			//小球下落原高度
+			var h=100;
+			//初始值走过的距离
+			var sum=0;
+		 	for(var i = 1;i <= 15;i++){
+		        // 每次下落经过的米数
+		        sum += h;
+		        // 反跳回原高度的一半
+		        h /= 2;
+		        //第10次反弹
+		        if(i == 10){
+		            document.write("第10次落地时，经过" + sum + "米\n第10次反弹" + h + "米");
+		            document.write("<br>");
+		        }
+		        // 每次向上反弹经过的米数
+		        sum += h;
+		        //第15次反弹
+		        if(i == 15){
+		        	document.write("第15次反弹" + h + "米");
+		        }
+		    }
+		</script>
+	</body>
+</html>

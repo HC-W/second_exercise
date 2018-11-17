@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>div宽高值</title>
+	</head>
+	<body>
+		<!--<div id="div1"></div>
+		
+		<script type="text/javascript">
+			var myDiv=document.getElementById("div1");
+			
+			var wd=50;
+			var hg=100;
+			myDiv.style.width=wd+"px";
+			myDiv.style.height=hg+"px";
+			myDiv.style.backgroundColor="red";
+			myDiv.onclick=function(){
+				if(wd>=500 || hg>=500){
+					alert("改div的宽为"+wd+",高为"+hg);
+				}else{
+					wd=2*wd;
+					hg+=50;
+					console.log(wd);
+					console.log(hg);
+					myDiv.style.width=wd+"px";
+					myDiv.style.height=hg+"px";
+				}
+			}
+			
+			
+			
+		</script>-->
+		
+		
+		宽：<input type="text" name="" id="in1" value="" />
+		高：<input type="text" name="" id="in2" value="" />
+		背景色：<input type="text" name="" id="in3" value="" />
+		<input type="button" name="" id="btn" value="确定" />
+		<div id="div1"></div>
+		
+		<script type="text/javascript">
+			var myWidth=document.getElementById("in1");
+			var myHeight=document.getElementById("in2");
+			var myBgc=document.getElementById("in3");
+			var myBtn=document.getElementById("btn");
+			var myDiv=document.getElementById("div1");
+			
+			myBtn.onclick=function(){
+				var width=Number(myWidth.value);
+				var height=Number(myHeight.value);
+				var bgc=myBgc.value;
+				
+				myDiv.style.width=width+"px";
+				myDiv.style.height=height+"px";
+				myDiv.style.backgroundColor=bgc;
+//				console.log(myDiv.style.backgroundColor);
+
+				if(isNaN(width) || isNaN(height) || width>500 || height>500){
+					alert("输入有误！");
+					myDiv.onclick=function(){
+						alert("哎呀！太宽/高了！");
+					}
+				}else{
+					myDiv.onclick=function(){
+						if(width>=500 || height>=500){
+							alert("该div的宽为"+width+"px,高为"+height+"px");
+						}else{
+							width=2*width;
+							height+=50;
+							console.log(width);
+							console.log(height);
+							myDiv.style.width=width+"px";
+							myDiv.style.height=height+"px";
+						}
+				   }
+				}
+			}
+		</script>
+	</body>
+</html>
